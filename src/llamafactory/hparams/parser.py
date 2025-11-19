@@ -210,7 +210,7 @@ def _parse_train_args(args: Optional[Union[dict[str, Any], list[str]]] = None) -
         peft_args_class = CUSTOM_PEFT_CONFIG_MAPPING.get(args["finetuning_type"], PeftArguments)
     else:
         peft_args_class = PEFT_CONFIG_MAPPING.get(args["finetuning_type"], PeftArguments)
-    
+
     parser = HfArgumentParser(_TRAIN_ARGS + [peft_args_class])
     allow_extra_keys = is_env_enabled("ALLOW_EXTRA_ARGS")
     return _parse_args(parser, args, allow_extra_keys=allow_extra_keys)

@@ -72,7 +72,7 @@ LLAMABOARD_CONFIG = "llamaboard_config.yaml"
 
 HF_PEFT_METHODS = ["prompt-tuning", "prefix-tuning", "p-tuning", "ia3", "lntuning", "mtp"]
 
-ADAPTERS_METHODS = ["bn-adapter", "seq-bn-adapter", "par-adapter", "adapter-fusion"]
+ADAPTERS_METHODS = ["bn-adapter", "seq-bn-adapter", "par-adapter"]
 
 PEFT_CONFIG_MAPPING = {
     "prompt-tuning": PromptTuningConfig,
