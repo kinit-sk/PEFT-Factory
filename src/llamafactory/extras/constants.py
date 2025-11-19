@@ -27,12 +27,16 @@ from peft import (
 )
 from peft.utils import SAFETENSORS_WEIGHTS_NAME as SAFE_ADAPTER_WEIGHTS_NAME
 from peft.utils import WEIGHTS_NAME as ADAPTER_WEIGHTS_NAME
+from peft.utils import register_peft_method, PeftType
 from transformers.utils import SAFE_WEIGHTS_INDEX_NAME, SAFE_WEIGHTS_NAME, WEIGHTS_INDEX_NAME, WEIGHTS_NAME
+from aenum import extend_enum
 
 from ..cpeft.adapters import AdaptersDoubleSeqBnConfig, AdaptersParBnConfig, AdaptersSeqBnConfig
+from .peft_loader import discover_custom_peft_methods
 
 
 AUDIO_PLACEHOLDER = os.getenv("AUDIO_PLACEHOLDER", "<audio>")
+PEFT_DIR = os.getenv("PEFT_DIR", "./peft")
 
 CHECKPOINT_NAMES = {
     SAFE_ADAPTER_WEIGHTS_NAME,
@@ -68,9 +72,7 @@ LLAMABOARD_CONFIG = "llamaboard_config.yaml"
 
 HF_PEFT_METHODS = ["prompt-tuning", "prefix-tuning", "p-tuning", "ia3", "lntuning", "mtp"]
 
-ADAPTERS_METHODS = ["bn-adapter", "seq-bn-adapter", "par-adapter", "adapter-fusion"]
-
-CUSTOM_PEFT_METHODS = ["dept", "adept", "attempt", "bitfit"]
+ADAPTERS_METHODS = ["bn-adapter", "seq-bn-adapter", "par-adapter"]
 
 PEFT_CONFIG_MAPPING = {
     "prompt-tuning": PromptTuningConfig,
@@ -86,6 +88,19 @@ ADAPTERS_CONFIG_MAPPING = {
     "seq-bn-adapter": AdaptersSeqBnConfig,
     "par-adapter": AdaptersParBnConfig,
 }
+
+# Dynamically discover custom PEFT methods
+CUSTOM_PEFT_CONFIG_MAPPING = {}
+_discovered_methods = discover_custom_peft_methods(PEFT_DIR)
+
+for method_name, (config_cls, model_cls) in _discovered_methods.items():
+    CUSTOM_PEFT_CONFIG_MAPPING[method_name] = config_cls
+    extend_enum(PeftType, method_name.upper(), method_name.upper())
+    register_peft_method(name=method_name, config_cls=config_cls, model_cls=model_cls, is_mixed_compatible=False)
+
+# Update CUSTOM_PEFT_METHODS with discovered methods
+CUSTOM_PEFT_METHODS = list(CUSTOM_PEFT_CONFIG_MAPPING.keys())
+print(CUSTOM_PEFT_METHODS)
 
 METHODS = ["full", "freeze", "lora", "oft"] + ADAPTERS_METHODS + HF_PEFT_METHODS + CUSTOM_PEFT_METHODS
 

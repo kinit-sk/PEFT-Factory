@@ -290,7 +290,28 @@ def _setup_custom_peft(
     peft_args: "PeftArguments",
     is_trainable: bool,
     cast_trainable_params_to_fp32: bool,
-):
+) -> "PeftModel":
+    if model_args.adapter_name_or_path is not None:
+        # Load existing adapter
+        init_kwargs = {
+            "subfolder": model_args.adapter_folder,
+            "offload_folder": model_args.offload_folder,
+            "cache_dir": model_args.cache_dir,
+            "revision": model_args.model_revision,
+            "token": model_args.hf_hub_token,
+        }
+        
+        model: PeftModel = PeftModel.from_pretrained(model, model_args.adapter_name_or_path[0], **init_kwargs)
+        
+        logger.info_rank0("Loaded adapter(s): {}".format(",".join(model_args.adapter_name_or_path)))
+    else:
+        # Create new adapter using peft_args (which contains the custom config)
+        model: PeftModel = get_peft_model(model, peft_args)
+    
+    if is_trainable and cast_trainable_params_to_fp32:
+        for param in filter(lambda p: p.requires_grad, model.parameters()):
+            param.data = param.data.to(torch.float32)
+    
     return model
 
 

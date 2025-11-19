@@ -36,6 +36,8 @@ from ..extras.constants import (
     CHECKPOINT_NAMES,
     PEFT_CONFIG_MAPPING,
     PEFT_METHODS,
+    CUSTOM_PEFT_CONFIG_MAPPING,
+    CUSTOM_PEFT_METHODS,
     EngineName,
 )
 from ..extras.misc import check_dependencies, check_version, get_current_device, is_env_enabled
@@ -204,8 +206,11 @@ def _check_extra_dependencies(
 def _parse_train_args(args: Optional[Union[dict[str, Any], list[str]]] = None) -> _TRAIN_CLS:
     if args["finetuning_type"] in ADAPTERS_METHODS:
         peft_args_class = ADAPTERS_CONFIG_MAPPING.get(args["finetuning_type"], PeftArguments)
+    elif args["finetuning_type"] in CUSTOM_PEFT_METHODS:
+        peft_args_class = CUSTOM_PEFT_CONFIG_MAPPING.get(args["finetuning_type"], PeftArguments)
     else:
         peft_args_class = PEFT_CONFIG_MAPPING.get(args["finetuning_type"], PeftArguments)
+
     parser = HfArgumentParser(_TRAIN_ARGS + [peft_args_class])
     allow_extra_keys = is_env_enabled("ALLOW_EXTRA_ARGS")
     return _parse_args(parser, args, allow_extra_keys=allow_extra_keys)

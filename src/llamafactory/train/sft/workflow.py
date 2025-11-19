@@ -85,8 +85,6 @@ def run_sft(
     if finetuning_args.finetuning_type in ADAPTERS_METHODS:
         trainer_class = CustomSeq2SeqAdapterTrainer
 
-    # print(trainer_class)
-
     # Initialize our Trainer
     trainer = trainer_class(
         model=model,
