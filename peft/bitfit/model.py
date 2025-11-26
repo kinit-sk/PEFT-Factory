@@ -7,7 +7,7 @@ import warnings
 from peft.utils import ModulesToSaveWrapper
 
 TRANSFORMERS_MODELS_TO_BITFIT_TARGET_MODULES_MAPPING = {
-    "llama": ["q_proj", "k_proj", "v_proj", "o_proj", "up_proj", "down_proj"],
+    "llama": ["q_proj", "v_proj"],
 }
 
 # Handle both relative import (when used as a package) and dynamic loading (when loaded via importlib)

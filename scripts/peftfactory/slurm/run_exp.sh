@@ -1,8 +1,12 @@
-datasets=(cb copa wsc svamp conala rte mrpc openbookqa wic stsb cola gsm8k siqa math_qa winogrande sst2 hellaswag qnli)
-peft_methods=(prefix-tuning prompt-tuning p-tuning lora lntuning ia3)
-models=(llama-3-8b-instruct)
-seeds=(42 123 456 789 101112)
-EPOCHS=20
+# datasets=(cb copa wsc svamp conala rte mrpc openbookqa wic stsb cola gsm8k siqa math_qa winogrande sst2 hellaswag qnli)
+datasets=(sst2 cola wsc svamp)
+# peft_methods=(prefix-tuning prompt-tuning p-tuning lora lntuning ia3)
+peft_methods=(bitfit ia3 prefix-tuning lora)
+models=(llama-3.2-1b-instruct)
+# seeds=(42 123 456 789 101112)
+seeds=(42)
+# EPOCHS=20
+EPOCHS=10
 
 for s in ${seeds[@]};
 do

@@ -25,7 +25,7 @@
 #SBATCH --account=p1370-25-2
 
 eval "$(conda shell.bash hook)"
-conda activate peft-factory
+conda activate peft-factory2
 module load libsndfile
 
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola)
@@ -40,8 +40,8 @@ export HF_HOME="/projects/${PROJECT}/cache"
 
 # datasets=(mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
-datasets=(mnli qqp qnli sst2 stsb mrpc rte cola multirc boolq wic wsc cb copa mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
-peft_methods=(prefix-tuning)
+datasets=(sst2)
+peft_methods=(bitfit)
 models=(llama-3-8b-instruct)
 
 
@@ -51,10 +51,10 @@ do
     do
         for pm in ${peft_methods[@]};
         do
-            saves=(saves/${pm}/${m}/train_${d}_*)
+            saves=(saves_multiple/${pm}/${m}/train_${d}_*)
 
             TIMESTAMP=`date +%s`
-            OUTPUT_DIR="saves/${pm}/${m}/eval_${d}_${TIMESTAMP}"
+            OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${TIMESTAMP}"
             ADAPTER="${saves[-1]}"
             DATASET="${d}_eval"
             SEED=123

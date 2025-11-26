@@ -18,9 +18,9 @@
 # peft_methods=(ia3 prefix-tuning prompt-tuning lora lntuning)
 # models=(gemma-3-1b-it llama-3-8b-instruct mistral-7b-instruct)
 
-datasets=(apps)
+datasets=(sst2)
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola)
-peft_methods=(prompt-tuning)
+peft_methods=(bitfit)
 # peft_methods=(base)
 models=(llama-3-8b-instruct)
 
@@ -30,10 +30,12 @@ do
     do
         for pm in ${peft_methods[@]};
         do
-            saves=(saves/${pm}/${m}/train_${d}_*)
+            # saves=(saves/${pm}/${m}/train_${d}_*)
+            saves=(saves_multiple/${pm}/${m}/train_${d}_*)
             
             TIMESTAMP=`date +%s`
-            OUTPUT_DIR="saves/${pm}/${m}/eval_${d}_${TIMESTAMP}"
+            # OUTPUT_DIR="saves/${pm}/${m}/eval_${d}_${TIMESTAMP}"
+            OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${TIMESTAMP}"
 
             if [[ "${pm}" == "base" ]]; then
                 ADAPTER=""

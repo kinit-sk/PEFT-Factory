@@ -108,8 +108,8 @@ def plot_barplot(df, title="Performance Comparison", basename="barplot"):
         title (str): Title of the plot
         basename (str): Base name (without extension) for output files
     """
-    means = df.applymap(lambda x: x["mean"])
-    stds = df.applymap(lambda x: x["std"])
+    means = df.map(lambda x: x["mean"])
+    stds = df.map(lambda x: x["std"])
 
     # Plot
     ax = means.plot(kind="bar", yerr=stds, capsize=4, figsize=(12, 4), rot=0)
@@ -162,6 +162,23 @@ def get_results_from_jsonl(eval_dir):
     return results
 
 
+def _format_mean_std(cell):
+    """Format mean/std dicts into a LaTeX-friendly string."""
+    if not isinstance(cell, dict):
+        return ""
+
+    mean = cell.get("mean")
+    std = cell.get("std")
+
+    if mean is None:
+        return ""
+
+    if std is None or np.isnan(std):
+        return f"${mean:.1f}$"
+
+    return f"${mean:.1f} \\pm {std:.1f}$"
+
+
 for m in models:
     print(f"Model {m}")
 
@@ -191,6 +208,8 @@ for m in models:
     print(results_df.T.mean().round(1))
 
 
+stability_datasets = ["cb", "copa", "svamp", "cola", "sst2", "hellaswag", "wsc"]
+
 for m in models:
     print(f"Model {m}")
 
@@ -198,12 +217,12 @@ for m in models:
     for pm in ["ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning"]:
         print(f"Method {pm}")
         results[methods_map[pm]] = {}
-        for d in ["cb", "copa", "svamp", "cola"]:
+        for d in stability_datasets:
             print(f"Dataset {d}")
             results[methods_map[pm]][datasets_map[d]] = {}
             seed_results = []
             for s in seeds:
-                glob_res = glob.glob(f"saves_stability/{pm}/{m}/eval_{d}_{s}*")
+                glob_res = glob.glob(f"saves_multiple/{pm}/{m}/eval_{d}_{s}*")
 
                 if not glob_res:
                     continue
@@ -218,10 +237,45 @@ for m in models:
                 results[methods_map[pm]][datasets_map[d]]["std"] = np.std(seed_results)
 
     results_df = pd.DataFrame(results).T
-    print(results_df.to_string())
+    # print(results_df.to_string())
+    formatted_df = results_df.applymap(_format_mean_std)
+    print(
+        formatted_df.to_latex(
+            caption="Performance across tasks and tuning methods", label="tab:results", escape=False
+        )
+    )
+    plot_barplot(results_df, title="")
+
+
+### PEFT methods for PEFT-Factory demonstration
+models = ["llama-3.2-1b-instruct"]
+methods = ["ia3", "bitfit", "prefix-tuning"]
+datasets = ["sst2", "cola", "wsc", "svamp"]
+
+for m in models:
+    print(f"Model {m}")
+
+    results = {}
+    for pm in methods:
+        print(f"Method {pm}")
+        results[pm] = {}
+        for d in datasets:
+            print(f"Dataset {d}")
+            glob_res = glob.glob(f"saves_multiple/{pm}/{m}/eval_{d}*")
+
+            if not glob_res:
+                continue
+
+            try:
+                results[pm][d] = get_single_result(get_results_from_jsonl(sorted(glob_res)[-1]), d) * 100
+            except FileNotFoundError:
+                continue
+
+    results_df = pd.DataFrame(results).T
     print(
         results_df.to_latex(
             float_format="%.1f", caption="Performance across tasks and tuning methods", label="tab:results"
         )
     )
-    plot_barplot(results_df, title="")
+
+    print(results_df.T.mean().round(1))

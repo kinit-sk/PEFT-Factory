@@ -1,0 +1,65 @@
+seed: ${SEED}
+
+### model
+model_name_or_path: meta-llama/Llama-3.2-1B-Instruct
+adapter_name_or_path: ${ADAPTER}
+trust_remote_code: true
+flash_attn: auto
+use_cache: false
+
+### method
+stage: sft
+do_train: false
+finetuning_type: ia3
+task_type: CAUSAL_LM
+target_modules:
+- k_proj
+- v_proj
+- down_proj
+feedforward_modules: down_proj
+
+### dataset
+eval_dataset: ${DATASET}
+template: llama3
+cutoff_len: 2048
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 2
+packing: false
+
+### output
+output_dir: ${OUTPUT_DIR}
+logging_steps: 5
+save_steps: 0.05
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+include_num_input_tokens_seen: true
+save_total_limit: 1
+
+### train
+per_device_train_batch_size: 8
+learning_rate: 5.0e-5
+num_train_epochs: 10.0
+weight_decay: 1.0e-5
+lr_scheduler_type: cosine
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+warmup_ratio: 0.1
+optim: adamw_torch
+report_to:
+- wandb
+run_name: ${WANDB_NAME}
+
+### eval
+do_eval: false
+per_device_eval_batch_size: 8
+
+### predict
+do_predict: true
+predict_with_generate: true
+temperature: null
+top_k: null
+top_p: null
+do_sample: false

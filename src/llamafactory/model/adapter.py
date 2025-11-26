@@ -308,10 +308,6 @@ def _setup_custom_peft(
         # Create new adapter using peft_args (which contains the custom config)
         model: PeftModel = get_peft_model(model, peft_args)
     
-    if is_trainable and cast_trainable_params_to_fp32:
-        for param in filter(lambda p: p.requires_grad, model.parameters()):
-            param.data = param.data.to(torch.float32)
-    
     return model
 
 
