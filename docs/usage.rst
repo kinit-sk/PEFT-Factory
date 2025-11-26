@@ -31,13 +31,18 @@ Install wiht pip
    pip install dist/peftfactory-0.9.4.dev0-py3-none-any.whl
 
 
+.. _peft-providers-support:
+
+PEFT Providers Support
+--------------------
+
 .. _adding-peft-methods:
 
-Adding PEFT methods
+Adding PEFT Methods
 --------------------
 
 
 .. _adding-datasets:
 
-Adding datasets
+Adding Datasets
 --------------------
