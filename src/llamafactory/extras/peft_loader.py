@@ -1,4 +1,4 @@
-# Copyright 2025 the PEFTFactory team.
+# Copyright 2025 the PEFT-Factory team.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ from peft.tuners.tuners_utils import BaseTuner
 
 
 logger = logging.getLogger(__name__)
+
 
 def discover_custom_peft_methods(peft_dir: str) -> dict[str, tuple[type[PeftConfig], type[BaseTuner]]]:
     """Discover custom PEFT methods from directory structure.
@@ -53,7 +54,7 @@ def discover_custom_peft_methods(peft_dir: str) -> dict[str, tuple[type[PeftConf
             method_name = method_dir.name
 
             # Skip hidden directories and __pycache__
-            if method_name.startswith('.') or method_name == '__pycache__':
+            if method_name.startswith(".") or method_name == "__pycache__":
                 continue
 
             try:
@@ -62,7 +63,9 @@ def discover_custom_peft_methods(peft_dir: str) -> dict[str, tuple[type[PeftConf
                     discovered_methods[method_name] = (config_cls, model_cls)
                     logger.info(f"Discovered custom PEFT method: {method_name}")
                 else:
-                    logger.warning(f"Failed to load complete PEFT method '{method_name}': missing config or model class")
+                    logger.warning(
+                        f"Failed to load complete PEFT method '{method_name}': missing config or model class"
+                    )
             except Exception as e:
                 logger.warning(f"Failed to load PEFT method '{method_name}': {e}")
                 continue
@@ -74,7 +77,9 @@ def discover_custom_peft_methods(peft_dir: str) -> dict[str, tuple[type[PeftConf
     return discovered_methods
 
 
-def _load_peft_method(method_dir: Path, method_name: str) -> tuple[Optional[type[PeftConfig]], Optional[type[BaseTuner]]]:
+def _load_peft_method(
+    method_dir: Path, method_name: str
+) -> tuple[Optional[type[PeftConfig]], Optional[type[BaseTuner]]]:
     """Load config and model classes for a specific PEFT method.
 
     Args:
@@ -131,11 +136,9 @@ def _find_peft_config_class(module, method_name: str) -> Optional[type[PeftConfi
     for attr_name in dir(module):
         try:
             attr = getattr(module, attr_name)
-            if (isinstance(attr, type) and
-                issubclass(attr, PeftConfig) and
-                attr != PeftConfig):
+            if isinstance(attr, type) and issubclass(attr, PeftConfig) and attr != PeftConfig:
                 # Validate that the class has required attributes
-                if hasattr(attr, 'peft_type'):
+                if hasattr(attr, "peft_type"):
                     return attr
                 else:
                     logger.warning(f"Config class {attr_name} in {method_name} missing 'peft_type' attribute")
@@ -152,11 +155,9 @@ def _find_base_tuner_class(module, method_name: str) -> Optional[type[BaseTuner]
     for attr_name in dir(module):
         try:
             attr = getattr(module, attr_name)
-            if (isinstance(attr, type) and
-                issubclass(attr, BaseTuner) and
-                attr != BaseTuner):
+            if isinstance(attr, type) and issubclass(attr, BaseTuner) and attr != BaseTuner:
                 # Validate that the class has required attributes
-                if hasattr(attr, 'prefix'):
+                if hasattr(attr, "prefix"):
                     return attr
                 else:
                     logger.warning(f"Model class {attr_name} in {method_name} missing 'prefix' attribute")

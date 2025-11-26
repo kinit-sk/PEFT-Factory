@@ -231,6 +231,7 @@ class QuantizationArguments:
         metadata={"help": "Enable FP8 optimizations for FSDP2 all-gather operations."},
     )
 
+
 @dataclass
 class ProcessorArguments:
     r"""Arguments pertaining to the image processor."""

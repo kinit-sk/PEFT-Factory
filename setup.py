@@ -39,10 +39,12 @@ def get_console_scripts() -> list[str]:
         "llamafactory-cli = llamafactory.cli:main",
     ]
     if os.getenv("ENABLE_SHORT_CONSOLE", "1").lower() in ["true", "y", "1"]:
-        console_scripts.extend([
-            "pf = llamafactory.cli:main",
-            "lmf = llamafactory.cli:main",
-        ])
+        console_scripts.extend(
+            [
+                "pf = llamafactory.cli:main",
+                "lmf = llamafactory.cli:main",
+            ]
+        )
 
     return console_scripts
 

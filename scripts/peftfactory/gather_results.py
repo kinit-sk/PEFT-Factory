@@ -240,9 +240,7 @@ for m in models:
     # print(results_df.to_string())
     formatted_df = results_df.applymap(_format_mean_std)
     print(
-        formatted_df.to_latex(
-            caption="Performance across tasks and tuning methods", label="tab:results", escape=False
-        )
+        formatted_df.to_latex(caption="Performance across tasks and tuning methods", label="tab:results", escape=False)
     )
     plot_barplot(results_df, title="")
 

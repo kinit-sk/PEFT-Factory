@@ -34,10 +34,10 @@ from ..extras.constants import (
     ADAPTERS_CONFIG_MAPPING,
     ADAPTERS_METHODS,
     CHECKPOINT_NAMES,
-    PEFT_CONFIG_MAPPING,
-    PEFT_METHODS,
     CUSTOM_PEFT_CONFIG_MAPPING,
     CUSTOM_PEFT_METHODS,
+    PEFT_CONFIG_MAPPING,
+    PEFT_METHODS,
     EngineName,
 )
 from ..extras.misc import check_dependencies, check_version, get_current_device, is_env_enabled

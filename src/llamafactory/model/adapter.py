@@ -20,8 +20,8 @@ import torch
 from peft import LoraConfig, LoraModel, OFTConfig, PeftConfig, PeftModel, TaskType, get_peft_model
 from transformers.integrations import is_deepspeed_zero3_enabled
 
-from ..extras.constants import ADAPTERS_METHODS, HF_PEFT_METHODS, CUSTOM_PEFT_METHODS
 from ..extras import logging
+from ..extras.constants import ADAPTERS_METHODS, CUSTOM_PEFT_METHODS, HF_PEFT_METHODS
 from .model_utils.misc import find_all_linear_modules, find_expanded_modules
 from .model_utils.quantization import QuantizationMethod
 from .model_utils.unsloth import get_unsloth_peft_model, load_unsloth_peft_model
@@ -300,14 +300,14 @@ def _setup_custom_peft(
             "revision": model_args.model_revision,
             "token": model_args.hf_hub_token,
         }
-        
+
         model: PeftModel = PeftModel.from_pretrained(model, model_args.adapter_name_or_path[0], **init_kwargs)
-        
+
         logger.info_rank0("Loaded adapter(s): {}".format(",".join(model_args.adapter_name_or_path)))
     else:
         # Create new adapter using peft_args (which contains the custom config)
         model: PeftModel = get_peft_model(model, peft_args)
-    
+
     return model
 
 
