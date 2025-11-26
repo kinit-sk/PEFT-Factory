@@ -29,6 +29,7 @@ packaging
 protobuf
 pyyaml
 pydantic<=2.10.6
+aenum
 # api
 uvicorn
 fastapi
