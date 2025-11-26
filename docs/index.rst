@@ -1,5 +1,3 @@
-.. include:: ./README.rst
-
 Welcome to PEFT-Factory documentation!
 ===================================
 
@@ -8,6 +6,8 @@ over 100 language models. It provides a simple and consistent interface.
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
+
+.. include:: ./README.rst
 
 .. note::
 

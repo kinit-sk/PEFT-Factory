@@ -1,7 +1,4 @@
-.. figure:: assets/logo.png
-   :alt: # PEFT Factory
-
-   # PEFT Factory
+.. figure:: ../assets/logo.png
 
 .. container::
 
