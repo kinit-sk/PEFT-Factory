@@ -34,9 +34,15 @@ def get_requires() -> list[str]:
 
 
 def get_console_scripts() -> list[str]:
-    console_scripts = ["llamafactory-cli = llamafactory.cli:main"]
+    console_scripts = [
+        "peftfactory-cli = llamafactory.cli:main",
+        "llamafactory-cli = llamafactory.cli:main",
+    ]
     if os.getenv("ENABLE_SHORT_CONSOLE", "1").lower() in ["true", "y", "1"]:
-        console_scripts.append("lmf = llamafactory.cli:main")
+        console_scripts.extend([
+            "pf = llamafactory.cli:main",
+            "lmf = llamafactory.cli:main",
+        ])
 
     return console_scripts
 
@@ -79,7 +85,7 @@ extra_require = {
 
 def main():
     setup(
-        name="llamafactory",
+        name="peftfactory",
         version=get_version(),
         author="hiyouga",
         author_email="hiyouga@buaa.edu.cn",

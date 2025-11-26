@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "llamafactory"
+name = "peftfactory"
 requires-python = ">=3.9.0"
 dynamic = [
     "version",

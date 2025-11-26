@@ -32,7 +32,7 @@ def print_env() -> None:
     from transformers.utils import is_torch_cuda_available, is_torch_npu_available
 
     info = {
-        "`llamafactory` version": VERSION,
+        "`peftfactory` version": VERSION,
         "Platform": platform.platform(),
         "Python version": platform.python_version(),
         "PyTorch version": torch.__version__,
