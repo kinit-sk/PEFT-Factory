@@ -1,44 +1,12 @@
 cff-version: 1.2.0
-date-released: 2024-03
+date-released: 2025-11
 message: "If you use this software, please cite it as below."
 authors:
-- family-names: "Zheng"
-  given-names: "Yaowei"
-- family-names: "Zhang"
-  given-names: "Richong"
-- family-names: "Zhang"
-  given-names: "Junhao"
-- family-names: "Ye"
-  given-names: "Yanhan"
-- family-names: "Luo"
-  given-names: "Zheyan"
-- family-names: "Feng"
-  given-names: "Zhangchi"
-- family-names: "Ma"
-  given-names: "Yongqiang"
-title: "LlamaFactory: Unified Efficient Fine-Tuning of 100+ Language Models"
-url: "https://arxiv.org/abs/2403.13372"
-preferred-citation:
-  type: conference-paper
-  conference:
-    name: "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 3: System Demonstrations)"
-  authors:
-    - family-names: "Zheng"
-      given-names: "Yaowei"
-    - family-names: "Zhang"
-      given-names: "Richong"
-    - family-names: "Zhang"
-      given-names: "Junhao"
-    - family-names: "Ye"
-      given-names: "Yanhan"
-    - family-names: "Luo"
-      given-names: "Zheyan"
-    - family-names: "Feng"
-      given-names: "Zhangchi"
-    - family-names: "Ma"
-      given-names: "Yongqiang"
-  title: "LlamaFactory: Unified Efficient Fine-Tuning of 100+ Language Models"
-  url: "https://arxiv.org/abs/2403.13372"
-  year: 2024
-  publisher: "Association for Computational Linguistics"
-  address: "Bangkok, Thailand"
+- family-names: "Robert"
+  given-names: "Belanec"
+- family-names: "Ivan"
+  given-names: "Srba"
+- family-names: "Maria"
+  given-names: "Bielikova"
+title: "PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of Autoregressive Large Language Models"
+# TODO add prefered citation
