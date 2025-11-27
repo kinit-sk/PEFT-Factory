@@ -113,10 +113,6 @@ def load_tokenizer(model_args: "ModelArguments") -> "TokenizerModule":
         logger.info_rank0(f"Failed to load processor: {e}.")
         processor = None
 
-    # TODO fix the if statement below
-    if processor:
-        patch_processor(processor, tokenizer, model_args)
-
     # Avoid load tokenizer, see:
     # https://github.com/huggingface/transformers/blob/v4.40.0/src/transformers/models/auto/processing_auto.py#L324
     if processor is not None and "Processor" not in processor.__class__.__name__:

@@ -95,6 +95,6 @@ Run the factory
    Prompt Tuning             ✅ 🤗
    P-Tuning                  ✅ 🤗
    LNTuning                  ✅ 🤗
-   SVD                       🔜 ⚙️
-   BitFit                    🔜 ⚙️
+   SVD                       ✅ ⚙️
+   BitFit                    ✅ ⚙️
    ========================= =======

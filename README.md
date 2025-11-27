@@ -73,8 +73,8 @@ llamafactory-cli train ${OUTPUT_DIR}/train.yaml
 | Prompt Tuning              | ✅ 🤗  |
 | P-Tuning                   | ✅ 🤗  |
 | LNTuning                   | ✅ 🤗  |
-| SVD                        | 🔜 ⚙️  |
-| BitFit                     | 🔜 ⚙️  |
+| SVD                        | ✅ ⚙️  |
+| BitFit                     | ✅ ⚙️  |
 
 
 </div>
