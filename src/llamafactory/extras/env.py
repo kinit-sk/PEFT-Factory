@@ -30,7 +30,7 @@
 # limitations under the License.
 
 
-VERSION = "0.9.4.1.dev0"
+VERSION = "0.9.4.4"
 
 
 def print_env() -> None:
