@@ -1,3 +1,16 @@
+# Copyright 2025 the PEFT-Factory team.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # Copyright 2025 the LlamaFactory team.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,53 +28,53 @@
 LOCALES = {
     "title": {
         "en": {
-            "value": "<h1><center>🦙🏭LLaMA Factory: Unified Efficient Fine-Tuning of 100+ LLMs</center></h1>",
+            "value": "<h1><center>🦙🏭⚙️PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of 100+ LLMs</center></h1>",
         },
         "ru": {
-            "value": "<h1><center>🦙🏭LLaMA Factory: Унифицированная эффективная тонкая настройка 100+ LLMs</center></h1>",
+            "value": "<h1><center>🦙🏭⚙️PEFT-Factory: Унифицированная эффективная тонкая настройка 100+ LLMs</center></h1>",
         },
         "zh": {
-            "value": "<h1><center>🦙🏭LLaMA Factory: 一站式大模型高效微调平台</center></h1>",
+            "value": "<h1><center>🦙🏭⚙️PEFT-Factory: 一站式大模型高效微调平台</center></h1>",
         },
         "ko": {
-            "value": "<h1><center>🦙🏭LLaMA Factory: 100+ LLMs를 위한 통합 효율적인 튜닝</center></h1>",
+            "value": "<h1><center>🦙🏭⚙️PEFT-Factory: 100+ LLMs를 위한 통합 효율적인 튜닝</center></h1>",
         },
         "ja": {
-            "value": "<h1><center>🦙🏭LLaMA Factory: 100+ LLMs の統合効率的なチューニング</center></h1>",
+            "value": "<h1><center>🦙🏭⚙️PEFT-Factory: 100+ LLMs の統合効率的なチューニング</center></h1>",
         },
     },
     "subtitle": {
         "en": {
             "value": (
-                "<h3><center>Visit <a href='https://github.com/hiyouga/LLaMA-Factory' target='_blank'>"
+                "<h3><center>Visit <a href='https://github.com/kinit-sk/PEFT-Factory' target='_blank'>"
                 "GitHub Page</a></center></h3>"
             ),
         },
         "ru": {
             "value": (
-                "<h3><center>Посетить <a href='https://github.com/hiyouga/LLaMA-Factory' target='_blank'>"
-                "страницу GitHub</a> <a href='https://llamafactory.readthedocs.io/en/latest/' target='_blank'>"
+                "<h3><center>Посетить <a href='https://github.com/kinit-sk/PEFT-Factory' target='_blank'>"
+                "страницу GitHub</a> <a href='https://peft-factory.readthedocs.io/en/latest/' target='_blank'>"
                 "Документацию</a></center></h3>"
             ),
         },
         "zh": {
             "value": (
-                "<h3><center>访问 <a href='https://github.com/hiyouga/LLaMA-Factory' target='_blank'>"
-                "GitHub 主页</a> <a href='https://llamafactory.readthedocs.io/zh-cn/latest/' target='_blank'>"
+                "<h3><center>访问 <a href='https://github.com/kinit-sk/PEFT-Factory' target='_blank'>"
+                "GitHub 主页</a> <a href='https://peft-factory.readthedocs.io/zh-cn/latest/' target='_blank'>"
                 "官方文档</a></center></h3>"
             ),
         },
         "ko": {
             "value": (
-                "<h3><center><a href='https://github.com/hiyouga/LLaMA-Factory' target='_blank'>"
-                "GitHub 페이지</a> <a href='https://llamafactory.readthedocs.io/en/latest/' target='_blank'>"
+                "<h3><center><a href='https://github.com/kinit-sk/PEFT-Factory' target='_blank'>"
+                "GitHub 페이지</a> <a href='https://peft-factory.readthedocs.io/en/latest/' target='_blank'>"
                 "공식 문서</a>를 방문하세요.</center></h3>"
             ),
         },
         "ja": {
             "value": (
-                "<h3><center><a href='https://github.com/hiyouga/LLaMA-Factory' target='_blank'>"
-                "GitHub ページ</a> <a href='https://llamafactory.readthedocs.io/en/latest/' target='_blank'>"
+                "<h3><center><a href='https://github.com/kinit-sk/PEFT-Factory' target='_blank'>"
+                "GitHub ページ</a> <a href='https://peft-factory.readthedocs.io/en/latest/' target='_blank'>"
                 "ドキュメント</a>にアクセスする</center></h3>"
             ),
         },

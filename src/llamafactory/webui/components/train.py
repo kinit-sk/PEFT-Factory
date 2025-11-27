@@ -212,6 +212,7 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
         )
     )
 
+    ### PEFT Configurations ###
     with gr.Accordion(open=False) as peft_tab:
         with gr.Row():
             task_type = gr.Dropdown(
@@ -244,8 +245,8 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
 
             LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
 
-            with gr.Row():
-                for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
+            for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
+                with gr.Row():
                     if field.name in peft_common_config_values:
                         continue
 
