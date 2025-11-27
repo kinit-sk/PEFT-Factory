@@ -40,6 +40,7 @@ jobs:
     environment:
       name: docker
       url: https://hub.docker.com/r/wicwik/peftfactory
+
     steps:
       - name: Free up disk space
         uses: jlumbroso/free-disk-space@v1.3.1
@@ -55,7 +56,7 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Get llamafactory version
+      - name: Get peftfactory version
         id: version
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
@@ -92,7 +93,6 @@ jobs:
             EXTRAS=metrics,deepspeed,liger-kernel
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            docker.io/wicwik/peftfactory:latest
             docker.io/wicwik/peftfactory:${{ steps.version.outputs.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -106,9 +106,6 @@ jobs:
           file: ./docker/docker-npu/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            docker.io/hiyouga/llamafactory:latest-npu-a2
-            docker.io/hiyouga/llamafactory:${{ steps.version.outputs.tag }}-npu-a2
-            quay.io/ascend/llamafactory:latest-npu-a2
-            quay.io/ascend/llamafactory:${{ steps.version.outputs.tag }}-npu-a2
+            docker.io/wicwik/peftfactory:${{ steps.version.outputs.tag }}-npu-a2
           cache-from: type=gha
           cache-to: type=gha,mode=max
