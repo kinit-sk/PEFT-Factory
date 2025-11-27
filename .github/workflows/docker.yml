@@ -75,14 +75,6 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to Quay
-        if: ${{ github.event_name != 'pull_request' && matrix.device == 'npu' }}
-        uses: docker/login-action@v3
-        with:
-          registry: quay.io
-          username: ${{ vars.QUAY_ASCEND_USERNAME }}
-          password: ${{ secrets.QUAY_ASCEND_TOKEN }}
-
       - name: Build and push Docker image (CUDA)
         if: ${{ matrix.device == 'cuda' }}
         uses: docker/build-push-action@v6
