@@ -15,6 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from copy import deepcopy
 from typing import TYPE_CHECKING, Optional
 
 from peft import PeftConfig
@@ -22,11 +23,18 @@ from peft import PeftConfig
 from ...data import SFTDataCollatorWith4DAttentionMask, get_dataset, get_template_and_fix_tokenizer
 from ...extras.constants import ADAPTERS_METHODS, IGNORE_INDEX
 from ...extras.logging import get_logger
-from ...extras.misc import calculate_tps
+from ...extras.misc import calculate_tps, count_parameters
 from ...extras.ploting import plot_loss
 from ...model import load_model, load_tokenizer
 from ..trainer_utils import create_modelcard_and_push
-from .metric import ComputeAccuracy, ComputeSimilarity, eval_logit_processor
+from .metric import (
+    ComputeAccuracy,
+    ComputeClassification,
+    ComputeSimilarity,
+    calculate_flops,
+    eval_logit_processor,
+    pscp,
+)
 from .trainer import CustomSeq2SeqAdapterTrainer, CustomSeq2SeqTrainer
 
 
@@ -52,6 +60,14 @@ def run_sft(
     tokenizer = tokenizer_module["tokenizer"]
     template = get_template_and_fix_tokenizer(tokenizer, data_args)
     dataset_module = get_dataset(template, model_args, data_args, training_args, stage="sft", **tokenizer_module)
+
+    if finetuning_args.compute_pscp:
+        dummy_args = deepcopy(model_args)
+        dummy_args.adapter_name_or_path = None
+        model = load_model(tokenizer, dummy_args, finetuning_args, peft_args, is_trainable=True)
+        params, _ = count_parameters(model)
+        del model, dummy_args
+
     model = load_model(tokenizer, model_args, finetuning_args, peft_args, training_args.do_train)
 
     if getattr(model, "is_quantized", False) and not training_args.do_train:
@@ -72,6 +88,9 @@ def run_sft(
     metric_module = {}
     if training_args.predict_with_generate:
         metric_module["compute_metrics"] = ComputeSimilarity(tokenizer=tokenizer)
+
+        if finetuning_args.compute_classification_metrics:
+            metric_module["compute_metrics"] = ComputeClassification(tokenizer=tokenizer)
     elif finetuning_args.compute_accuracy:
         metric_module["compute_metrics"] = ComputeAccuracy()
         metric_module["preprocess_logits_for_metrics"] = eval_logit_processor
@@ -134,6 +153,29 @@ def run_sft(
     if training_args.do_predict:
         logger.warning_rank0_once("Batch generation can be very slow. Consider using `scripts/vllm_infer.py` instead.")
         predict_results = trainer.predict(dataset_module["eval_dataset"], metric_key_prefix="predict", **gen_kwargs)
+
+        if finetuning_args.compute_pscp:
+            performance = predict_results.metrics["predict_f1"]
+            flops = calculate_flops(model)
+            memory = finetuning_args.pscp_memory
+
+            predict_results.metrics["predict_pscp"] = pscp(
+                performance,
+                params,
+                flops,
+                memory,
+                finetuning_args.pscp_cp,
+                finetuning_args.pscp_cf,
+                finetuning_args.pscp_cm,
+                finetuning_args.pscp_bp,
+                finetuning_args.pscp_bf,
+                finetuning_args.pscp_bm,
+            )
+
+            predict_results.metrics["predict_params"] = params
+            predict_results.metrics["predict_flops"] = flops
+            predict_results.metrics["predict_memory"] = memory
+
         trainer.log_metrics("predict", predict_results.metrics)
         trainer.save_metrics("predict", predict_results.metrics)
         trainer.save_predictions(dataset_module["eval_dataset"], predict_results, generating_args.skip_special_tokens)

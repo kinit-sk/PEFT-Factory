@@ -329,8 +329,6 @@ def _setup_adapters_peft(
             "token": model_args.hf_hub_token,
         }
 
-        print(model_args.adapter_name_or_path)
-
         adapter_name = model.load_adapter(model_args.adapter_name_or_path[0], **init_kwargs)
         model.set_active_adapters(adapter_name)
 

@@ -15,6 +15,13 @@
 Installation
 ~~~~~~~~~~~~
 
+.. code:: bash
+
+   pip install peftfactory
+
+From the source
+----------------
+
 ⚠️ Currently, the best way is to install from this repository. This will
 change soon.
 
@@ -32,12 +39,12 @@ Build the wheel
 
    make build
 
-Install wiht pip
+Install with pip
 ^^^^^^^^^^^^^^^^
 
 .. code:: bash
 
-   pip install dist/llamafactory-0.9.4.dev0-py3-none-any.whl
+   pip install dist/[your-built-wheel].whl
 
 Quickstart
 ~~~~~~~~~~
@@ -78,7 +85,7 @@ Run the factory
 
 .. code:: bash
 
-   llamafactory-cli train ${OUTPUT_DIR}/train.yaml
+   peftfactory-cli train ${OUTPUT_DIR}/train.yaml
 
 --------------
 
@@ -95,6 +102,6 @@ Run the factory
    Prompt Tuning             ✅ 🤗
    P-Tuning                  ✅ 🤗
    LNTuning                  ✅ 🤗
-   SVD                       ✅ ⚙️
+   SVFT                      ✅ ⚙️
    BitFit                    ✅ ⚙️
    ========================= =======

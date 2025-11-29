@@ -20,3 +20,4 @@ Contents
 
    Home <self>
    usage
+   contributing

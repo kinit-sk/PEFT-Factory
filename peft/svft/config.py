@@ -7,11 +7,11 @@ from peft.utils import PeftType
 
 
 @dataclass
-class SVDConfig(PeftConfig):
+class SVFTConfig(PeftConfig):
     target_modules: Optional[Union[list[str], str]] = field(default=None,
         metadata={
             "help": (
-                "List of module names or regex expression of the module names to replace with SVD."
+                "List of module names or regex expression of the module names to replace with SVFT."
                 "For example, '.*decoder.*' or '.*encoder.*'. "
                 "If not specified, modules will be chosen according to the model architecture, If the architecture is "
                 "not known, an error will be raised -- in this case, you shoud specify the target modules manually."

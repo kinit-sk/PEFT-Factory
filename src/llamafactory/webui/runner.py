@@ -12,16 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import ast
 import json
 import os
 from collections.abc import Generator
 from copy import deepcopy
+from dataclasses import fields
 from subprocess import PIPE, Popen, TimeoutExpired
 from typing import TYPE_CHECKING, Any, Optional
 
 from transformers.utils import is_torch_npu_available
 
-from ..extras.constants import LLAMABOARD_CONFIG, MULTIMODAL_SUPPORTED_MODELS, PEFT_METHODS, TRAINING_STAGES
+from ..extras.constants import (
+    ADAPTERS_CONFIG_MAPPING,
+    CUSTOM_PEFT_CONFIG_MAPPING,
+    LLAMABOARD_CONFIG,
+    MULTIMODAL_SUPPORTED_MODELS,
+    PEFT_CONFIG_MAPPING,
+    PEFT_METHODS,
+    TRAINING_STAGES,
+)
 from ..extras.misc import is_accelerator_available, torch_gc
 from ..extras.packages import is_gradio_available
 from .common import (
@@ -287,6 +297,51 @@ class Runner:
             ds_offload = "offload_" if get("train.ds_offload") else ""
             args["deepspeed"] = os.path.join(DEFAULT_CACHE_DIR, f"ds_z{ds_stage}_{ds_offload}config.json")
 
+        # peft config
+        peft_common_config_values = [
+            "base_model_name_or_path",
+            "revision",
+            "peft_type",
+            "task_type",
+            "inference_mode",
+            "auto_mapping",
+            "num_transformer_submodules",
+            "num_attention_heads",
+            "num_layers",
+            "modules_to_save",
+            "token_dim",
+        ]
+
+        if args["finetuning_type"] in PEFT_CONFIG_MAPPING:
+            for field in fields(PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
+
+        elif args["finetuning_type"] in ADAPTERS_CONFIG_MAPPING:
+            for field in fields(ADAPTERS_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
+
+        elif args["finetuning_type"] in CUSTOM_PEFT_CONFIG_MAPPING:
+            for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
+
         return args
 
     def _parse_eval_args(self, data: dict["Component", Any]) -> dict[str, Any]:
@@ -319,12 +374,23 @@ class Runner:
             output_dir=get_save_dir(model_name, finetuning_type, get("eval.output_dir")),
             trust_remote_code=True,
             ddp_timeout=180000000,
+            compute_classification_metrics=get("eval.compute_classification_metrics"),
+            compute_pscp=get("eval.compute_pscp"),
         )
 
         if get("eval.predict"):
             args["do_predict"] = True
         else:
             args["do_eval"] = True
+
+        if args["compute_pscp"]:
+            args["pscp_memory"] = get("eval.pscp_memory")
+            args["pscp_cp"] = get("eval.pscp_cp")
+            args["pscp_cf"] = get("eval.pscp_cf")
+            args["pscp_cm"] = get("eval.pscp_cm")
+            args["pscp_bp"] = get("eval.pscp_bp")
+            args["pscp_bf"] = get("eval.pscp_bf")
+            args["pscp_bm"] = get("eval.pscp_bm")
 
         # checkpoints
         if get("top.checkpoint_path"):

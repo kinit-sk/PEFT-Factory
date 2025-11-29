@@ -590,6 +590,65 @@ LOCALES = {
             "info": "混合精度トレーニングを使用するかどうか。",
         },
     },
+    "compute_pscp": {
+        "en": {
+            "label": "Compute PSCP",
+            "info": "Whether or not to compute the PSPC metric at evaluation.",
+        },
+    },
+    "pscp_tab": {
+        "en": {
+            "label": "PSCP Settings",
+        },
+    },
+    "pscp_memory": {
+        "en": {
+            "label": "PSCP Memory (GB)",
+            "info": "Memory used during training.",
+        },
+    },
+    "pscp_cp": {
+        "en": {
+            "label": "PSCP Cp",
+            "info": "Cp constant for trainable parameters PSCP cost computation.",
+        },
+    },
+    "pscp_cf": {
+        "en": {
+            "label": "PSCP Cf",
+            "info": "Cf constant for inference time PSCP cost computation.",
+        },
+    },
+    "pscp_cm": {
+        "en": {
+            "label": "PSCP Cm",
+            "info": "Cm constant for memory factor in PSCP cost computation.",
+        },
+    },
+    "pscp_bp": {
+        "en": {
+            "label": "PSCP Bp",
+            "info": "Beta importance of paramters factor.",
+        },
+    },
+    "pscp_bf": {
+        "en": {
+            "label": "PSCP Bf",
+            "info": "Beta importance of inference time factor.",
+        },
+    },
+    "pscp_bm": {
+        "en": {
+            "label": "PSCP Bm",
+            "info": "Beta importance of memory factor.",
+        },
+    },
+    "compute_classification_metrics": {
+        "en": {
+            "label": "Compute Classification Metrics",
+            "info": "Whether or not to compute classification metrics at evaluation.",
+        },
+    },
     "cutoff_len": {
         "en": {
             "label": "Cutoff length",
