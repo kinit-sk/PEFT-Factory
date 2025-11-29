@@ -105,3 +105,6 @@ def is_vllm_available():
 
 def is_sglang_available():
     return _is_package_available("sglang")
+
+def is_deepspeed_available():
+    return _is_package_available("deepspeed")

@@ -21,14 +21,12 @@ from typing import TYPE_CHECKING, Optional
 
 import numpy as np
 import torch
-from deepspeed.accelerator import get_accelerator  # type: ignore
-from deepspeed.profiling.flops_profiler import get_model_profile  # type: ignore
 from sklearn.metrics import f1_score
 from transformers.utils import is_nltk_available
 
 from ...extras.constants import IGNORE_INDEX
 from ...extras.misc import numpify
-from ...extras.packages import is_jieba_available, is_rouge_available
+from ...extras.packages import is_jieba_available, is_rouge_available, is_deepspeed_available
 
 
 def _pscp_cost(metric_value: float, constant: float, beta: float) -> float:
@@ -50,6 +48,10 @@ if is_nltk_available():
 
 if is_rouge_available():
     from rouge_chinese import Rouge  # type: ignore
+
+if is_deepspeed_available():
+    from deepspeed.accelerator import get_accelerator  # type: ignore
+    from deepspeed.profiling.flops_profiler import get_model_profile  # type: ignore
 
 
 def check_data_state(preds, targets):

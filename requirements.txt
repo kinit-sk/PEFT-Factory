@@ -38,4 +38,3 @@ sse-starlette
 av
 librosa
 adapters
-deepspeed
