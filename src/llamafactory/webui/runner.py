@@ -12,17 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import ast
 import json
 import os
 from collections.abc import Generator
 from copy import deepcopy
+from dataclasses import fields
 from subprocess import PIPE, Popen, TimeoutExpired
 from typing import TYPE_CHECKING, Any, Optional
 
-from dataclasses import fields
 from transformers.utils import is_torch_npu_available
 
-from ..extras.constants import LLAMABOARD_CONFIG, MULTIMODAL_SUPPORTED_MODELS, PEFT_METHODS, TRAINING_STAGES, PEFT_CONFIG_MAPPING, ADAPTERS_CONFIG_MAPPING, CUSTOM_PEFT_CONFIG_MAPPING
+from ..extras.constants import (
+    ADAPTERS_CONFIG_MAPPING,
+    CUSTOM_PEFT_CONFIG_MAPPING,
+    LLAMABOARD_CONFIG,
+    MULTIMODAL_SUPPORTED_MODELS,
+    PEFT_CONFIG_MAPPING,
+    PEFT_METHODS,
+    TRAINING_STAGES,
+)
 from ..extras.misc import is_accelerator_available, torch_gc
 from ..extras.packages import is_gradio_available
 from .common import (
@@ -41,7 +50,6 @@ from .common import (
 from .control import get_trainer_info
 from .locales import ALERTS, LOCALES
 
-import ast
 
 if is_gradio_available():
     import gradio as gr
@@ -311,7 +319,7 @@ class Runner:
 
                 if field.name == "target_modules":
                     args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
-                else:   
+                else:
                     args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
 
         elif args["finetuning_type"] in ADAPTERS_CONFIG_MAPPING:
@@ -323,7 +331,7 @@ class Runner:
                     args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
                 else:
                     args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
-            
+
         elif args["finetuning_type"] in CUSTOM_PEFT_CONFIG_MAPPING:
             for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
                 if field.name in peft_common_config_values:
