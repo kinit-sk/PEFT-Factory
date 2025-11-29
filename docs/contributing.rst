@@ -1,4 +1,4 @@
-Contribution
+Contributing
 ============
 
 .. _peft-providers-support:

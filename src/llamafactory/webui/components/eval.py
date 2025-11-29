@@ -43,6 +43,38 @@ def create_eval_tab(engine: "Engine") -> dict[str, "Component"]:
     elem_dict.update(dict(dataset_dir=dataset_dir, dataset=dataset, **preview_elems))
 
     with gr.Row():
+        compute_classification_metrics = gr.Checkbox(value=False)
+        compute_pscp = gr.Checkbox(value=False)
+
+    input_elems.update({compute_classification_metrics, compute_pscp})
+    elem_dict.update(dict(compute_classification_metrics=compute_classification_metrics, compute_pscp=compute_pscp))
+
+    with gr.Accordion(open=False) as pscp_tab:
+        elem_dict.update(dict(pscp_tab=pscp_tab))
+
+        with gr.Row():
+            pscp_memory = gr.Number(value=5.6)
+            pscp_cp = gr.Number(value=5e8)
+            pscp_cf = gr.Number(value=10)
+            pscp_cm = gr.Number(value=94)
+            pscp_bp = gr.Number(value=1.0)
+            pscp_bf = gr.Number(value=1.0)
+            pscp_bm = gr.Number(value=1.0)
+
+        input_elems.update({pscp_memory, pscp_cp, pscp_cf, pscp_cm, pscp_bp, pscp_bf, pscp_bm})
+        elem_dict.update(
+            dict(
+                pscp_memory=pscp_memory,
+                pscp_cp=pscp_cp,
+                pscp_cf=pscp_cf,
+                pscp_cm=pscp_cm,
+                pscp_bp=pscp_bp,
+                pscp_bf=pscp_bf,
+                pscp_bm=pscp_bm,
+            )
+        )
+
+    with gr.Row():
         cutoff_len = gr.Slider(minimum=4, maximum=131072, value=1024, step=1)
         max_samples = gr.Textbox(value="100000")
         batch_size = gr.Slider(minimum=1, maximum=1024, value=2, step=1)

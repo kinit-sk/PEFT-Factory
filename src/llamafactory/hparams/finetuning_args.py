@@ -443,7 +443,40 @@ class SwanLabArguments:
 
 
 @dataclass
+class PSCPArguments:
+    pscp_memory: float = field(
+        default=None,
+        metadata={"help": "Peak memory usage during training."},
+    )
+    pscp_cp: float = field(
+        default=5e8,
+        metadata={"help": "Reference constant for the number of parameters."},
+    )
+    pscp_cf: float = field(
+        default=10,
+        metadata={"help": "Reference constant for inference time."},
+    )
+    pscp_cm: float = field(
+        default=94,
+        metadata={"help": "Reference constant for memory usage."},
+    )
+    pscp_bp: float = field(
+        default=1,
+        metadata={"help": "Importance beta for the number of parameters."},
+    )
+    pscp_bf: float = field(
+        default=1,
+        metadata={"help": "Importance beta for the inference time."},
+    )
+    pscp_bm: float = field(
+        default=1,
+        metadata={"help": "Importance beta for the memory usage."},
+    )
+
+
+@dataclass
 class FinetuningArguments(
+    PSCPArguments,
     SwanLabArguments,
     BAdamArgument,
     ApolloArguments,
@@ -498,6 +531,14 @@ class FinetuningArguments(
     compute_accuracy: bool = field(
         default=False,
         metadata={"help": "Whether or not to compute the token-level accuracy at evaluation."},
+    )
+    compute_classification_metrics: bool = field(
+        default=False,
+        metadata={"help": "Whether or not to compute classification metrics at evaluation."},
+    )
+    compute_pscp: bool = field(
+        default=False,
+        metadata={"help": "Whether or not to compute the PSPC metric at evaluation."},
     )
     disable_shuffling: bool = field(
         default=False,

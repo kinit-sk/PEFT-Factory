@@ -319,12 +319,23 @@ class Runner:
             output_dir=get_save_dir(model_name, finetuning_type, get("eval.output_dir")),
             trust_remote_code=True,
             ddp_timeout=180000000,
+            compute_classification_metrics=get("eval.compute_classification_metrics"),
+            compute_pscp=get("eval.compute_pscp"),
         )
 
         if get("eval.predict"):
             args["do_predict"] = True
         else:
             args["do_eval"] = True
+
+        if args["compute_pscp"]:
+            args["pscp_memory"] = get("eval.pscp_memory")
+            args["pscp_cp"] = get("eval.pscp_cp")
+            args["pscp_cf"] = get("eval.pscp_cf")
+            args["pscp_cm"] = get("eval.pscp_cm")
+            args["pscp_bp"] = get("eval.pscp_bp")
+            args["pscp_bf"] = get("eval.pscp_bf")
+            args["pscp_bm"] = get("eval.pscp_bm")
 
         # checkpoints
         if get("top.checkpoint_path"):
