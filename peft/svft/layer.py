@@ -3,8 +3,8 @@ import torch.nn as nn
 
 from peft.tuners.tuners_utils import BaseTunerLayer
 
-class SVDLayer(nn.Module, BaseTunerLayer):
-    adapter_layer_names = ("svd_layers",)
+class SVFTLayer(nn.Module, BaseTunerLayer):
+    adapter_layer_names = ("svft_layers",)
 
     def __init__(self, base_layer: nn.Module, adapter_name: str):
         super().__init__()

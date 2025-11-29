@@ -19,9 +19,10 @@ from copy import deepcopy
 from subprocess import PIPE, Popen, TimeoutExpired
 from typing import TYPE_CHECKING, Any, Optional
 
+from dataclasses import fields
 from transformers.utils import is_torch_npu_available
 
-from ..extras.constants import LLAMABOARD_CONFIG, MULTIMODAL_SUPPORTED_MODELS, PEFT_METHODS, TRAINING_STAGES
+from ..extras.constants import LLAMABOARD_CONFIG, MULTIMODAL_SUPPORTED_MODELS, PEFT_METHODS, TRAINING_STAGES, PEFT_CONFIG_MAPPING, ADAPTERS_CONFIG_MAPPING, CUSTOM_PEFT_CONFIG_MAPPING
 from ..extras.misc import is_accelerator_available, torch_gc
 from ..extras.packages import is_gradio_available
 from .common import (
@@ -40,6 +41,7 @@ from .common import (
 from .control import get_trainer_info
 from .locales import ALERTS, LOCALES
 
+import ast
 
 if is_gradio_available():
     import gradio as gr
@@ -286,6 +288,51 @@ class Runner:
             ds_stage = get("train.ds_stage")
             ds_offload = "offload_" if get("train.ds_offload") else ""
             args["deepspeed"] = os.path.join(DEFAULT_CACHE_DIR, f"ds_z{ds_stage}_{ds_offload}config.json")
+
+        # peft config
+        peft_common_config_values = [
+            "base_model_name_or_path",
+            "revision",
+            "peft_type",
+            "task_type",
+            "inference_mode",
+            "auto_mapping",
+            "num_transformer_submodules",
+            "num_attention_heads",
+            "num_layers",
+            "modules_to_save",
+            "token_dim",
+        ]
+
+        if args["finetuning_type"] in PEFT_CONFIG_MAPPING:
+            for field in fields(PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                else:   
+                    args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
+
+        elif args["finetuning_type"] in ADAPTERS_CONFIG_MAPPING:
+            for field in fields(ADAPTERS_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
+            
+        elif args["finetuning_type"] in CUSTOM_PEFT_CONFIG_MAPPING:
+            for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
 
         return args
 
