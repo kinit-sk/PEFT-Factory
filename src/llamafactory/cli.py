@@ -23,15 +23,15 @@ USAGE = (
     "-" * 70
     + "\n"
     + "| Usage:                                                             |\n"
-    + "|   llamafactory-cli api -h: launch an OpenAI-style API server       |\n"
-    + "|   llamafactory-cli chat -h: launch a chat interface in CLI         |\n"
-    + "|   llamafactory-cli export -h: merge LoRA adapters and export model |\n"
-    + "|   llamafactory-cli train -h: train models                          |\n"
-    + "|   llamafactory-cli webchat -h: launch a chat interface in Web UI   |\n"
-    + "|   llamafactory-cli webui: launch LlamaBoard                        |\n"
-    + "|   llamafactory-cli env: show environment info                      |\n"
-    + "|   llamafactory-cli version: show version info                      |\n"
-    + "| Hint: You can use `lmf` as a shortcut for `llamafactory-cli`.      |\n"
+    + "|   peftfactory-cli api -h: launch an OpenAI-style API server       |\n"
+    + "|   peftfactory-cli chat -h: launch a chat interface in CLI         |\n"
+    + "|   peftfactory-cli export -h: merge LoRA adapters and export model |\n"
+    + "|   peftfactory-cli train -h: train models                          |\n"
+    + "|   peftfactory-cli webchat -h: launch a chat interface in Web UI   |\n"
+    + "|   peftfactory-cli webui: launch LlamaBoard                        |\n"
+    + "|   peftfactory-cli env: show environment info                      |\n"
+    + "|   peftfactory-cli version: show version info                      |\n"
+    + "| Hint: You can use `pf` as a shortcut for `peftfactory-cli`.      |\n"
     + "-" * 70
 )
 

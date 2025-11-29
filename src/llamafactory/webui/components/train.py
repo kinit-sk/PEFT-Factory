@@ -17,7 +17,12 @@ from typing import TYPE_CHECKING
 
 from transformers.trainer_utils import SchedulerType
 
-from ...extras.constants import PEFT_CONFIG_MAPPING, TRAINING_STAGES
+from ...extras.constants import (
+    ADAPTERS_CONFIG_MAPPING,
+    CUSTOM_PEFT_CONFIG_MAPPING,
+    PEFT_CONFIG_MAPPING,
+    TRAINING_STAGES,
+)
 from ...extras.misc import get_device_count
 from ...extras.packages import is_gradio_available
 from ..common import DEFAULT_DATA_DIR
@@ -212,6 +217,7 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
         )
     )
 
+    ### PEFT Configurations ###
     with gr.Accordion(open=False) as peft_tab:
         with gr.Row():
             task_type = gr.Dropdown(
@@ -235,7 +241,19 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
         }
     )
 
-    peft_common_config_values = ["base_model_name_or_path", "revision", "peft_type", "task_type", "inference_mode"]
+    peft_common_config_values = [
+        "base_model_name_or_path",
+        "revision",
+        "peft_type",
+        "task_type",
+        "inference_mode",
+        "auto_mapping",
+        "num_transformer_submodules",
+        "num_attention_heads",
+        "num_layers",
+        "modules_to_save",
+        "token_dim",
+    ]
     for peft_config_name in PEFT_CONFIG_MAPPING:
         with gr.Accordion(open=False) as peft_method_tab:
             peft_name = peft_config_name.lower().replace(" ", "_")
@@ -244,11 +262,57 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
 
             LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
 
-            with gr.Row():
-                for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
-                    if field.name in peft_common_config_values:
-                        continue
+            for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
+                if field.name in peft_common_config_values:
+                    continue
 
+                with gr.Row():
+                    if field.type is bool:
+                        elem = gr.Checkbox()
+                    else:
+                        elem = gr.Textbox()
+
+                    elem_dict.update({f"{peft_name}_{field.name}": elem})
+                    input_elems.update({elem})
+
+                    LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+
+    for peft_config_name in ADAPTERS_CONFIG_MAPPING:
+        with gr.Accordion(open=False) as peft_method_tab:
+            peft_name = peft_config_name.lower().replace(" ", "_")
+
+            elem_dict.update({peft_name: peft_method_tab})
+
+            LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+
+            for field in fields(ADAPTERS_CONFIG_MAPPING[peft_config_name]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                with gr.Row():
+                    if field.type is bool:
+                        elem = gr.Checkbox()
+                    else:
+                        elem = gr.Textbox()
+
+                    elem_dict.update({f"{peft_name}_{field.name}": elem})
+                    input_elems.update({elem})
+
+                    LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+
+    for peft_config_name in CUSTOM_PEFT_CONFIG_MAPPING:
+        with gr.Accordion(open=False) as peft_method_tab:
+            peft_name = peft_config_name.lower().replace(" ", "_")
+
+            elem_dict.update({peft_name: peft_method_tab})
+
+            LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+
+            for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[peft_config_name]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                with gr.Row():
                     if field.type is bool:
                         elem = gr.Checkbox()
                     else:

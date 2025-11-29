@@ -1,3 +1,16 @@
+# Copyright 2025 the PEFT-Factory team.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # Copyright 2025 the LlamaFactory team.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +52,7 @@ def create_ui(demo_mode: bool = False) -> "gr.Blocks":
     engine = Engine(demo_mode=demo_mode, pure_chat=False)
     hostname = os.getenv("HOSTNAME", os.getenv("COMPUTERNAME", platform.node())).split(".")[0]
 
-    with gr.Blocks(title=f"LLaMA Factory ({hostname})", css=CSS) as demo:
+    with gr.Blocks(title=f"PEFT-Factory ({hostname})", css=CSS) as demo:
         title = gr.HTML()
         subtitle = gr.HTML()
         if demo_mode:
@@ -74,8 +87,8 @@ def create_web_demo() -> "gr.Blocks":
     engine = Engine(pure_chat=True)
     hostname = os.getenv("HOSTNAME", os.getenv("COMPUTERNAME", platform.node())).split(".")[0]
 
-    with gr.Blocks(title=f"LLaMA Factory Web Demo ({hostname})", css=CSS) as demo:
-        lang = gr.Dropdown(choices=["en", "ru", "zh", "ko", "ja"], scale=1)
+    with gr.Blocks(title=f"PEFT-Factory Web Demo ({hostname})", css=CSS) as demo:
+        lang = gr.Dropdown(choices=["en"], scale=1)
         engine.manager.add_elems("top", dict(lang=lang))
 
         _, _, chat_elems = create_chat_box(engine, visible=True)

@@ -100,7 +100,6 @@ for method_name, (config_cls, model_cls) in _discovered_methods.items():
 
 # Update CUSTOM_PEFT_METHODS with discovered methods
 CUSTOM_PEFT_METHODS = list(CUSTOM_PEFT_CONFIG_MAPPING.keys())
-print(CUSTOM_PEFT_METHODS)
 
 METHODS = ["full", "freeze", "lora", "oft"] + ADAPTERS_METHODS + HF_PEFT_METHODS + CUSTOM_PEFT_METHODS
 
