@@ -112,7 +112,7 @@ def pscp(
     cost_memory = _pscp_cost(memory, c_m, beta_m)
 
     value = performance * cost_params * cost_flops * cost_memory
-    return float(np.round(value, 2))
+    return float(np.round(value, 6))
 
 
 def f1(preds, targets, valid_labels: Optional[list[str]] = None):

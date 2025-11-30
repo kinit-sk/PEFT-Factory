@@ -12,11 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import fields
 from typing import TYPE_CHECKING
 
+from ...extras.constants import (
+    ADAPTERS_CONFIG_MAPPING,
+    CUSTOM_PEFT_CONFIG_MAPPING,
+    PEFT_CONFIG_MAPPING,
+)
 from ...extras.packages import is_gradio_available
 from ..common import DEFAULT_DATA_DIR
 from ..control import list_datasets
+from ..locales import LOCALES
 from .data import create_preview_box
 
 
@@ -73,6 +80,113 @@ def create_eval_tab(engine: "Engine") -> dict[str, "Component"]:
                 pscp_bm=pscp_bm,
             )
         )
+
+    with gr.Accordion(open=False) as peft_tab:
+        with gr.Row():
+            task_type = gr.Dropdown(
+                choices=["SEQ_CLS", "SEQ_2_SEQ_LM", "CAUSAL_LM", "TOKEN_CLS", "QUESTION_ANS", "FEATURE_EXTRACTION"],
+                value="CAUSAL_LM",
+            )
+            inference_mode = gr.Checkbox()
+
+        elem_dict.update(
+            dict(
+                peft_tab=peft_tab,
+                task_type=task_type,
+                inference_mode=inference_mode,
+            )
+        )
+
+        input_elems.update(
+            {
+                task_type,
+                inference_mode,
+            }
+        )
+
+        peft_common_config_values = [
+            "base_model_name_or_path",
+            "revision",
+            "peft_type",
+            "task_type",
+            "inference_mode",
+            "auto_mapping",
+            "num_transformer_submodules",
+            "num_attention_heads",
+            "num_layers",
+            "modules_to_save",
+            "token_dim",
+        ]
+        for peft_config_name in PEFT_CONFIG_MAPPING:
+            with gr.Accordion(open=False) as peft_method_tab:
+                peft_name = peft_config_name.lower().replace(" ", "_")
+
+                elem_dict.update({peft_name: peft_method_tab})
+
+                LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+
+                for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
+                    if field.name in peft_common_config_values:
+                        continue
+
+                    with gr.Row():
+                        if field.type is bool:
+                            elem = gr.Checkbox()
+                        if field.type in [float, int]:
+                            elem = gr.Number()
+                        else:
+                            elem = gr.Textbox()
+
+                        elem_dict.update({f"{peft_name}_{field.name}": elem})
+                        input_elems.update({elem})
+
+                        LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+
+        for peft_config_name in ADAPTERS_CONFIG_MAPPING:
+            with gr.Accordion(open=False) as peft_method_tab:
+                peft_name = peft_config_name.lower().replace(" ", "_")
+
+                elem_dict.update({peft_name: peft_method_tab})
+
+                LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+
+                for field in fields(ADAPTERS_CONFIG_MAPPING[peft_config_name]):
+                    if field.name in peft_common_config_values:
+                        continue
+
+                    with gr.Row():
+                        if field.type is bool:
+                            elem = gr.Checkbox()
+                        else:
+                            elem = gr.Textbox()
+
+                        elem_dict.update({f"{peft_name}_{field.name}": elem})
+                        input_elems.update({elem})
+
+                        LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+
+        for peft_config_name in CUSTOM_PEFT_CONFIG_MAPPING:
+            with gr.Accordion(open=False) as peft_method_tab:
+                peft_name = peft_config_name.lower().replace(" ", "_")
+
+                elem_dict.update({peft_name: peft_method_tab})
+
+                LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+
+                for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[peft_config_name]):
+                    if field.name in peft_common_config_values:
+                        continue
+
+                    with gr.Row():
+                        if field.type is bool:
+                            elem = gr.Checkbox()
+                        else:
+                            elem = gr.Textbox()
+
+                        elem_dict.update({f"{peft_name}_{field.name}": elem})
+                        input_elems.update({elem})
+
+                        LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
 
     with gr.Row():
         cutoff_len = gr.Slider(minimum=4, maximum=131072, value=1024, step=1)

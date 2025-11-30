@@ -313,6 +313,9 @@ class Runner:
         ]
 
         if args["finetuning_type"] in PEFT_CONFIG_MAPPING:
+            args["task_type"] = get("train.task_type")
+            args["inference_mode"] = get("train.inference_mode")
+
             for field in fields(PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
                 if field.name in peft_common_config_values:
                     continue
@@ -398,6 +401,8 @@ class Runner:
                 args["adapter_name_or_path"] = ",".join(
                     [get_save_dir(model_name, finetuning_type, adapter) for adapter in get("top.checkpoint_path")]
                 )
+
+                args["task_type"] = get("eval.task_type")
             else:  # str
                 args["model_name_or_path"] = get_save_dir(model_name, finetuning_type, get("top.checkpoint_path"))
 
@@ -406,6 +411,54 @@ class Runner:
             args["quantization_bit"] = int(get("top.quantization_bit"))
             args["quantization_method"] = get("top.quantization_method")
             args["double_quantization"] = not is_torch_npu_available()
+
+        # peft config
+        peft_common_config_values = [
+            "base_model_name_or_path",
+            "revision",
+            "peft_type",
+            "task_type",
+            "inference_mode",
+            "auto_mapping",
+            "num_transformer_submodules",
+            "num_attention_heads",
+            "num_layers",
+            "modules_to_save",
+            "token_dim",
+        ]
+
+        if args["finetuning_type"] in PEFT_CONFIG_MAPPING:
+            args["task_type"] = get("eval.task_type")
+            args["inference_mode"] = get("eval.inference_mode")
+
+            for field in fields(PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"eval.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"eval.{args['finetuning_type']}_{field.name}")
+
+        elif args["finetuning_type"] in ADAPTERS_CONFIG_MAPPING:
+            for field in fields(ADAPTERS_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"eval.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"eval.{args['finetuning_type']}_{field.name}")
+
+        elif args["finetuning_type"] in CUSTOM_PEFT_CONFIG_MAPPING:
+            for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[args["finetuning_type"]]):
+                if field.name in peft_common_config_values:
+                    continue
+
+                if field.name == "target_modules":
+                    args[field.name] = ast.literal_eval(get(f"eval.{args['finetuning_type']}_{field.name}"))
+                else:
+                    args[field.name] = get(f"eval.{args['finetuning_type']}_{field.name}")
 
         return args
 
