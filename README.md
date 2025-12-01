@@ -5,76 +5,153 @@
 
 ----
 
-### Parameter-Efficient Fine-Tuning made easy
+## Parameter-Efficient Fine-Tuning made easy
 
 PEFT-Factory is a fork of [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Factory) ❤️, upgraded with easy to use **PEFT interface**, support for **HuggingFace PEFT methods** and **datasets** for benchmarking PEFT.
 </div>
 
 
-### Installation
-⚠️ Currently, the best way is to install from this repository. This will change soon.
+---
+<div align="center" markdown="1">
 
-#### Clone the repository
+## Supported methods
 
-```bash
-git clone git@github.com:Wicwik/PEFT-Factory.git
+PEFT method name            Support
+--------------------------- ---------
+LoRA (including variants)   ✅ 🦙
+OFT                         ✅ 🦙
+Prefix Tuning               ✅ 🤗
+Prompt Tuning               ✅ 🤗
+P-Tuning                    ✅ 🤗
+P-Tuning v2                 ✅ 🤗
+MPT                         ✅ 🤗
+IA3                         ✅ 🤗
+LNTuning                    ✅ 🤗
+Bottleneck Adapter          ✅ 🤖
+Parallal Adapter            ✅ 🤖
+SeqBottleneck Adapter       ✅ 🤖
+SVFT                        ✅ ⚙️
+BitFit                      ✅ ⚙️
+
+
+</div>
+
+# Usage
+
+This section provides instructions on how to install PEFT-Factory, download necessary data and methods, and run training using both command line and web UI.
+
+## Quickstart
+
+For video example please visit the [PEFT-Factory Demonstration
+Video](https://www.youtube.com/watch?v=Q3kxvlyO-XY).
+
+``` bash
+# install package
+pip install peftfactory
+
+# dowload repo that contains data, PEFT methods and examples
+git clone https://github.com/kinit-sk/PEFT-Factory.git && cd PEFT-Factory
+
+# start web UI
+pf webui
 ```
 
-#### Build the wheel
-```bash
-make build
+Alternatively, you can run training from command line:
+
+``` bash
+# install package
+pip install peftfactory
+
+# dowload repo that contains data, PEFT methods and examples
+git clone https://github.com/kinit-sk/PEFT-Factory.git && cd PEFT-Factory
 ```
 
-#### Install wiht pip
-```bash
-pip install dist/llamafactory-0.9.4.dev0-py3-none-any.whl
-```
+### Create some variables for envsubst
 
-### Quickstart
-Quick start of prefix tuning with LLaMa3-8B-Instruct for CB dataset. We are using the template from examples directory, but feel free to use your own `config.yml`.
-
-
-#### Create some variables for `envsubst`
-
-```bash
+``` bash
+# run training with config file
 TIMESTAMP=`date +%s`
-OUTPUT_DIR="saves/prefix-tuning/llama-3-8b-instruct/train_cb_${TIMESTAMP}"
-DATASET="cb"
+OUTPUT_DIR="saves/bitfit/llama-3.2-1b-instruct/train_wsc_${TIMESTAMP}"
+DATASET="wsc"
 SEED=123
-WANDB_PROJECT="peft-factory-train-prefix-tuning"
-WANDB_NAME="prefix-tuning_llama-3-8b-instruct_train_cb"
+WANDB_PROJECT="peft-factory-train-bitfit"
+WANDB_NAME="bitfit_llama-3.2-1b-instruct_train_wsc"
 
 mkdir -p "${OUTPUT_DIR}"
 
 export OUTPUT_DIR DATASET SEED WANDB_PROJECT WANDB_NAME
 ```
 
-#### Use the template
-Utility `envsubst` replaces the occurances of env variables with their values (see the [template](https://github.com/Wicwik/PEFT-Factory/blob/main/examples/peft/prefix-tuning/llama-3-8b-instruct/train.yaml)).
+### Use the template
+
+Utility `envsubst` replaces the occurances of env variables with their values (see the template).
 
 ```bash
-envsubst < examples/peft/prefix-tuning/llama-3-8b-instruct/train.yaml > ${OUTPUT_DIR}/train.yaml
+envsubst < examples/peft/bitfit/llama-3.2-1b-instruct/train.yaml > ${OUTPUT_DIR}/train.yaml
 ```
 
-#### Run the factory
+### Run the factory
+
 ```bash
-llamafactory-cli train ${OUTPUT_DIR}/train.yaml
+peftfactory-cli train ${OUTPUT_DIR}/train.yaml
 ```
 
----
-<div align="center" markdown="1">
+## Installation
 
-### Supported methods
+There are multiple ways to install PEFT-Factory. You can install
+develelopment version from source or install the latest release from PyPI.
 
-| PEFT method name           | Support |
-| -------------------------- | ------- |
-| LoRA (including variants)  | ✅ 🦙  |
-| Prefix Tuning              | ✅ 🤗  |
-| Prompt Tuning              | ✅ 🤗  |
-| P-Tuning                   | ✅ 🤗  |
-| LNTuning                   | ✅ 🤗  |
-| SVD                        | ✅ ⚙️  |
-| BitFit                     | ✅ ⚙️  |
+### Using pip
 
+```bash
+pip install peftfactory
+```
 
-</div>
+### From Source
+
+#### Clone the repository
+
+```bash
+git clone git@github.com:kinit-sk/PEFT-Factory.git
+```
+
+#### Build the wheel package
+
+```bash
+make build
+```
+
+#### Install with pip
+
+```bash
+pip install dist/[name of the built package].whl
+```
+
+## Get data and methods
+
+To download data, methods and examples for training please download the
+repository from GitHub.
+
+```bash
+git clone https://github.com/kinit-sk/PEFT-Factory.git && cd PEFT-Factory
+```
+
+## Run training
+
+You can run training from command line or using web UI.
+
+### From Command Line
+
+To run training from command line use the following command:
+
+```bash
+pf train [path to config file].yaml
+```
+
+### Using web UI
+
+To run the web UI use the following command:
+
+```bash
+pf webui
+```

@@ -7,7 +7,7 @@ copyright = '2025, PEFT-Factory team'
 author = 'Robert Belanec'
 
 release = '0.9.4'
-version = '0.9.4.1'
+version = '0.9.4.7'
 
 # -- General configuration
 
