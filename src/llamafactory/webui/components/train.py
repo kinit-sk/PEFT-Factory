@@ -260,7 +260,18 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
 
                 elem_dict.update({peft_name: peft_method_tab})
 
-                LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+                LOCALES.update(
+                    {
+                        peft_name: {
+                            "en": {"label": f"{peft_config_name} configurations"},
+                            "ru": {"label": f"{peft_config_name} configurations"},
+                            "zh": {"label": f"{peft_config_name} configurations"},
+                            "ko": {"label": f"{peft_config_name} configurations"},
+                            "ja": {"label": f"{peft_config_name} configurations"},
+                        }
+                    }
+                )
+
 
                 for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
                     if field.name in peft_common_config_values:
@@ -277,7 +288,17 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
                         elem_dict.update({f"{peft_name}_{field.name}": elem})
                         input_elems.update({elem})
 
-                        LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+                        LOCALES.update(
+                            {
+                                f"{peft_name}_{field.name}": {
+                                    "en": {"label": field.name},
+                                    "ru": {"label": field.name},
+                                    "zh": {"label": field.name},
+                                    "ko": {"label": field.name},
+                                    "ja": {"label": field.name},
+                                }
+                            }
+                        )
 
         for peft_config_name in ADAPTERS_CONFIG_MAPPING:
             with gr.Accordion(open=False) as peft_method_tab:
@@ -285,7 +306,18 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
 
                 elem_dict.update({peft_name: peft_method_tab})
 
-                LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+                LOCALES.update(
+                    {
+                        peft_name: {
+                            "en": {"label": f"{peft_config_name} configurations"},
+                            "ru": {"label": f"{peft_config_name} configurations"},
+                            "zh": {"label": f"{peft_config_name} configurations"},
+                            "ko": {"label": f"{peft_config_name} configurations"},
+                            "ja": {"label": f"{peft_config_name} configurations"},
+                        }
+                    }
+                )
+
 
                 for field in fields(ADAPTERS_CONFIG_MAPPING[peft_config_name]):
                     if field.name in peft_common_config_values:
@@ -300,7 +332,17 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
                         elem_dict.update({f"{peft_name}_{field.name}": elem})
                         input_elems.update({elem})
 
-                        LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+                        LOCALES.update(
+                            {
+                                f"{peft_name}_{field.name}": {
+                                    "en": {"label": field.name},
+                                    "ru": {"label": field.name},
+                                    "zh": {"label": field.name},
+                                    "ko": {"label": field.name},
+                                    "ja": {"label": field.name},
+                                }
+                            }
+                        )
 
         for peft_config_name in CUSTOM_PEFT_CONFIG_MAPPING:
             with gr.Accordion(open=False) as peft_method_tab:
@@ -308,7 +350,18 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
 
                 elem_dict.update({peft_name: peft_method_tab})
 
-                LOCALES.update({peft_name: {"en": {"label": f"{peft_config_name} configurations"}}})
+                LOCALES.update(
+                    {
+                        peft_name: {
+                            "en": {"label": f"{peft_config_name} configurations"},
+                            "ru": {"label": f"{peft_config_name} configurations"},
+                            "zh": {"label": f"{peft_config_name} configurations"},
+                            "ko": {"label": f"{peft_config_name} configurations"},
+                            "ja": {"label": f"{peft_config_name} configurations"},
+                        }
+                    }
+                )
+
 
                 for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[peft_config_name]):
                     if field.name in peft_common_config_values:
@@ -323,7 +376,17 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
                         elem_dict.update({f"{peft_name}_{field.name}": elem})
                         input_elems.update({elem})
 
-                        LOCALES.update({f"{peft_name}_{field.name}": {"en": {"label": field.name}}})
+                        LOCALES.update(
+                            {
+                                f"{peft_name}_{field.name}": {
+                                    "en": {"label": field.name},
+                                    "ru": {"label": field.name},
+                                    "zh": {"label": field.name},
+                                    "ko": {"label": field.name},
+                                    "ja": {"label": field.name},
+                                }
+                            }
+                        )
 
     with gr.Accordion(open=False) as rlhf_tab:
         with gr.Row():

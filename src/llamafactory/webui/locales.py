@@ -590,8 +590,24 @@ LOCALES = {
             "info": "混合精度トレーニングを使用するかどうか。",
         },
     },
-    "compute_pscp": {
+   "compute_pscp": {
         "en": {
+            "label": "Compute PSCP",
+            "info": "Whether or not to compute the PSPC metric at evaluation.",
+        },
+        "ru": {
+            "label": "Compute PSCP",
+            "info": "Whether or not to compute the PSPC metric at evaluation.",
+        },
+        "zh": {
+            "label": "Compute PSCP",
+            "info": "Whether or not to compute the PSPC metric at evaluation.",
+        },
+        "ko": {
+            "label": "Compute PSCP",
+            "info": "Whether or not to compute the PSPC metric at evaluation.",
+        },
+        "ja": {
             "label": "Compute PSCP",
             "info": "Whether or not to compute the PSPC metric at evaluation.",
         },
@@ -600,9 +616,37 @@ LOCALES = {
         "en": {
             "label": "PSCP Settings",
         },
+        "ru": {
+            "label": "PSCP Settings",
+        },
+        "zh": {
+            "label": "PSCP Settings",
+        },
+        "ko": {
+            "label": "PSCP Settings",
+        },
+        "ja": {
+            "label": "PSCP Settings",
+        },
     },
     "pscp_memory": {
         "en": {
+            "label": "PSCP Memory (GB)",
+            "info": "Memory used during training.",
+        },
+        "ru": {
+            "label": "PSCP Memory (GB)",
+            "info": "Memory used during training.",
+        },
+        "zh": {
+            "label": "PSCP Memory (GB)",
+            "info": "Memory used during training.",
+        },
+        "ko": {
+            "label": "PSCP Memory (GB)",
+            "info": "Memory used during training.",
+        },
+        "ja": {
             "label": "PSCP Memory (GB)",
             "info": "Memory used during training.",
         },
@@ -612,9 +656,41 @@ LOCALES = {
             "label": "PSCP Cp",
             "info": "Cp constant for trainable parameters PSCP cost computation.",
         },
+        "ru": {
+            "label": "PSCP Cp",
+            "info": "Cp constant for trainable parameters PSCP cost computation.",
+        },
+        "zh": {
+            "label": "PSCP Cp",
+            "info": "Cp constant for trainable parameters PSCP cost computation.",
+        },
+        "ko": {
+            "label": "PSCP Cp",
+            "info": "Cp constant for trainable parameters PSCP cost computation.",
+        },
+        "ja": {
+            "label": "PSCP Cp",
+            "info": "Cp constant for trainable parameters PSCP cost computation.",
+        },
     },
     "pscp_cf": {
         "en": {
+            "label": "PSCP Cf",
+            "info": "Cf constant for inference time PSCP cost computation.",
+        },
+        "ru": {
+            "label": "PSCP Cf",
+            "info": "Cf constant for inference time PSCP cost computation.",
+        },
+        "zh": {
+            "label": "PSCP Cf",
+            "info": "Cf constant for inference time PSCP cost computation.",
+        },
+        "ko": {
+            "label": "PSCP Cf",
+            "info": "Cf constant for inference time PSCP cost computation.",
+        },
+        "ja": {
             "label": "PSCP Cf",
             "info": "Cf constant for inference time PSCP cost computation.",
         },
@@ -624,9 +700,41 @@ LOCALES = {
             "label": "PSCP Cm",
             "info": "Cm constant for memory factor in PSCP cost computation.",
         },
+        "ru": {
+            "label": "PSCP Cm",
+            "info": "Cm constant for memory factor in PSCP cost computation.",
+        },
+        "zh": {
+            "label": "PSCP Cm",
+            "info": "Cm constant for memory factor in PSCP cost computation.",
+        },
+        "ko": {
+            "label": "PSCP Cm",
+            "info": "Cm constant for memory factor in PSCP cost computation.",
+        },
+        "ja": {
+            "label": "PSCP Cm",
+            "info": "Cm constant for memory factor in PSCP cost computation.",
+        },
     },
     "pscp_bp": {
         "en": {
+            "label": "PSCP Bp",
+            "info": "Beta importance of paramters factor.",
+        },
+        "ru": {
+            "label": "PSCP Bp",
+            "info": "Beta importance of paramters factor.",
+        },
+        "zh": {
+            "label": "PSCP Bp",
+            "info": "Beta importance of paramters factor.",
+        },
+        "ko": {
+            "label": "PSCP Bp",
+            "info": "Beta importance of paramters factor.",
+        },
+        "ja": {
             "label": "PSCP Bp",
             "info": "Beta importance of paramters factor.",
         },
@@ -636,15 +744,63 @@ LOCALES = {
             "label": "PSCP Bf",
             "info": "Beta importance of inference time factor.",
         },
+        "ru": {
+            "label": "PSCP Bf",
+            "info": "Beta importance of inference time factor.",
+        },
+        "zh": {
+            "label": "PSCP Bf",
+            "info": "Beta importance of inference time factor.",
+        },
+        "ko": {
+            "label": "PSCP Bf",
+            "info": "Beta importance of inference time factor.",
+        },
+        "ja": {
+            "label": "PSCP Bf",
+            "info": "Beta importance of inference time factor.",
+        },
     },
     "pscp_bm": {
         "en": {
             "label": "PSCP Bm",
             "info": "Beta importance of memory factor.",
         },
+        "ru": {
+            "label": "PSCP Bm",
+            "info": "Beta importance of memory factor.",
+        },
+        "zh": {
+            "label": "PSCP Bm",
+            "info": "Beta importance of memory factor.",
+        },
+        "ko": {
+            "label": "PSCP Bm",
+            "info": "Beta importance of memory factor.",
+        },
+        "ja": {
+            "label": "PSCP Bm",
+            "info": "Beta importance of memory factor.",
+        },
     },
     "compute_classification_metrics": {
         "en": {
+            "label": "Compute Classification Metrics",
+            "info": "Whether or not to compute classification metrics at evaluation.",
+        },
+        "ru": {
+            "label": "Compute Classification Metrics",
+            "info": "Whether or not to compute classification metrics at evaluation.",
+        },
+        "zh": {
+            "label": "Compute Classification Metrics",
+            "info": "Whether or not to compute classification metrics at evaluation.",
+        },
+        "ko": {
+            "label": "Compute Classification Metrics",
+            "info": "Whether or not to compute classification metrics at evaluation.",
+        },
+        "ja": {
             "label": "Compute Classification Metrics",
             "info": "Whether or not to compute classification metrics at evaluation.",
         },
@@ -1398,18 +1554,62 @@ LOCALES = {
         "en": {
             "label": "PEFT configurations",
         },
+        "ru": {
+            "label": "PEFT configurations",
+        },
+        "zh": {
+            "label": "PEFT configurations",
+        },
+        "ko": {
+            "label": "PEFT configurations",
+        },
+        "ja": {
+            "label": "PEFT configurations",
+        },
     },
     "task_type": {
         "en": {
             "label": "Task type",
             "info": "Set training task type for PEFT",
-        }
+        },
+        "ru": {
+            "label": "Task type",
+            "info": "Set training task type for PEFT",
+        },
+        "zh": {
+            "label": "Task type",
+            "info": "Set training task type for PEFT",
+        },
+        "ko": {
+            "label": "Task type",
+            "info": "Set training task type for PEFT",
+        },
+        "ja": {
+            "label": "Task type",
+            "info": "Set training task type for PEFT",
+        },
     },
     "inference_mode": {
         "en": {
             "label": "Inference mode",
             "info": "Set PEFT adapter to inference mode",
-        }
+        },
+        "ru": {
+            "label": "Inference mode",
+            "info": "Set PEFT adapter to inference mode",
+        },
+        "zh": {
+            "label": "Inference mode",
+            "info": "Set PEFT adapter to inference mode",
+        },
+        "ko": {
+            "label": "Inference mode",
+            "info": "Set PEFT adapter to inference mode",
+        },
+        "ja": {
+            "label": "Inference mode",
+            "info": "Set PEFT adapter to inference mode",
+        },
     },
     "rlhf_tab": {
         "en": {
