@@ -56,7 +56,7 @@ def main():
         + "|\n|"
         + " " * 56
         + "|\n"
-        + "| Project page: https://github.com/hiyouga/LLaMA-Factory |\n"
+        + "| Project page: https://github.com/kinit-sk/PEFT-Factory|\n"
         + "-" * 58
     )
 
