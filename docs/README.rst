@@ -12,82 +12,20 @@
    upgraded with easy to use **PEFT interface**, support for
    **HuggingFace PEFT methods** and **datasets** for benchmarking PEFT.
 
-Installation
-~~~~~~~~~~~~
 
-.. code:: bash
+Table of Contents
+=================
 
-   pip install peftfactory
+* Usage
+   * `Installation <https://peft-factory.readthedocs.io/en/latest/usage.html#installation>`__
+   * `Quickstart <https://peft-factory.readthedocs.io/en/latest/usage.html#quickstart>`__
+   * `Get data and methods <https://peft-factory.readthedocs.io/en/latest/usage.html#get-data-and-methods>`__
+   * `Run training <https://peft-factory.readthedocs.io/en/latest/usage.html#run-training>`__
 
-From the source
-----------------
-
-⚠️ Currently, the best way is to install from this repository. This will
-change soon.
-
-Clone the repository
-^^^^^^^^^^^^^^^^^^^^
-
-.. code:: bash
-
-   git clone git@github.com:Wicwik/PEFT-Factory.git
-
-Build the wheel
-^^^^^^^^^^^^^^^
-
-.. code:: bash
-
-   make build
-
-Install with pip
-^^^^^^^^^^^^^^^^
-
-.. code:: bash
-
-   pip install dist/[your-built-wheel].whl
-
-Quickstart
-~~~~~~~~~~
-
-Quick start of prefix tuning with LLaMa3-8B-Instruct for CB dataset. We
-are using the template from examples directory, but feel free to use
-your own ``config.yml``.
-
-Create some variables for ``envsubst``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code:: bash
-
-   TIMESTAMP=`date +%s`
-   OUTPUT_DIR="saves/prefix-tuning/llama-3-8b-instruct/train_cb_${TIMESTAMP}"
-   DATASET="cb"
-   SEED=123
-   WANDB_PROJECT="peft-factory-train-prefix-tuning"
-   WANDB_NAME="prefix-tuning_llama-3-8b-instruct_train_cb"
-
-   mkdir -p "${OUTPUT_DIR}"
-
-   export OUTPUT_DIR DATASET SEED WANDB_PROJECT WANDB_NAME
-
-Use the template
-^^^^^^^^^^^^^^^^
-
-Utility ``envsubst`` replaces the occurances of env variables with their
-values (see the
-`template <https://github.com/Wicwik/PEFT-Factory/blob/main/examples/peft/prefix-tuning/llama-3-8b-instruct/train.yaml>`__).
-
-.. code:: bash
-
-   envsubst < examples/peft/prefix-tuning/llama-3-8b-instruct/train.yaml > ${OUTPUT_DIR}/train.yaml
-
-Run the factory
-^^^^^^^^^^^^^^^
-
-.. code:: bash
-
-   peftfactory-cli train ${OUTPUT_DIR}/train.yaml
-
---------------
+* `Contributing <https://peft-factory.readthedocs.io/en/latest/contributing.html>`__
+  * `PEFT providers support <https://peft-factory.readthedocs.io/en/latest/contributing.html#adding-peft-methods>`__
+  * `Adding PEFT methods <https://peft-factory.readthedocs.io/en/latest/contributing.html#adding-peft-methods>`__
+  * `Adding datasets <https://peft-factory.readthedocs.io/en/latest/contributing.html#adding-datasets>`__
 
 .. container::
 
