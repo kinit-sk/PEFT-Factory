@@ -15,6 +15,8 @@
 Supported PEFT Methods
 ===============================
 .. container::
+      .. rubric::
+      :name: parameter-efficient-fine-tuning-made-easy
 
    ========================= =======
    PEFT method name          Support
