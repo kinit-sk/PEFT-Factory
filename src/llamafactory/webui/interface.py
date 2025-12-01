@@ -101,6 +101,41 @@ def create_web_demo() -> "gr.Blocks":
     return demo
 
 
+def create_spaces_demo(demo_mode: bool = False) -> "gr.Blocks":
+    engine = Engine(demo_mode=demo_mode, pure_chat=False)
+    hostname = os.getenv("HOSTNAME", os.getenv("COMPUTERNAME", platform.node())).split(".")[0]
+
+    with gr.Blocks(title=f"PEFT-Factory ({hostname})", css=CSS) as demo:
+        title = gr.HTML()
+        subtitle = gr.HTML()
+        if demo_mode:
+            gr.DuplicateButton(value="Duplicate Space for private use", elem_classes="duplicate-button")
+
+        engine.manager.add_elems("head", {"title": title, "subtitle": subtitle})
+        engine.manager.add_elems("top", create_top())
+        lang: gr.Dropdown = engine.manager.get_elem_by_id("top.lang")
+
+        with gr.Tab("Train"):
+            engine.manager.add_elems("train", create_train_tab(engine))
+
+        with gr.Tab("Evaluate & Predict"):
+            engine.manager.add_elems("eval", create_eval_tab(engine))
+
+        with gr.Tab("Chat"):
+            engine.manager.add_elems("infer", create_infer_tab(engine))
+
+        if not demo_mode:
+            with gr.Tab("Export"):
+                engine.manager.add_elems("export", create_export_tab(engine))
+
+        engine.manager.add_elems("footer", create_footer())
+        demo.load(engine.resume, outputs=engine.manager.get_elem_list(), concurrency_limit=None)
+        lang.change(engine.change_lang, [lang], engine.manager.get_elem_list(), queue=False)
+        lang.input(save_config, inputs=[lang], queue=False)
+
+    return demo
+
+
 def run_web_ui() -> None:
     gradio_ipv6 = is_env_enabled("GRADIO_IPV6")
     gradio_share = is_env_enabled("GRADIO_SHARE")
@@ -117,3 +152,7 @@ def run_web_demo() -> None:
     print("Visit http://ip:port for Web UI, e.g., http://127.0.0.1:7860")
     fix_proxy(ipv6_enabled=gradio_ipv6)
     create_web_demo().queue().launch(share=gradio_share, server_name=server_name, inbrowser=True)
+
+
+def run_spaces_demo() -> None:
+    create_spaces_demo().launch()

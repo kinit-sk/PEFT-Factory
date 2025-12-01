@@ -21,6 +21,7 @@ from dataclasses import fields
 from subprocess import PIPE, Popen, TimeoutExpired
 from typing import TYPE_CHECKING, Any, Optional
 
+import spaces
 from transformers.utils import is_torch_npu_available
 
 from ..extras.constants import (
@@ -515,6 +516,10 @@ class Runner:
         yield from self._preview(data, do_train=False)
 
     def run_train(self, data):
+        yield from self._launch(data, do_train=True)
+
+    @spaces.GPU
+    def run_spaces_train(self, data):
         yield from self._launch(data, do_train=True)
 
     def run_eval(self, data):
