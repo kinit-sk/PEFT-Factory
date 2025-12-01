@@ -12,11 +12,11 @@
    upgraded with easy to use **PEFT interface**, support for
    **HuggingFace PEFT methods** and **datasets** for benchmarking PEFT.
 
-Supported PEFT Methods
+Supported PEFT methods
 ===============================
 .. container::
-      .. rubric::
-      :name: parameter-efficient-fine-tuning-made-easy
+      .. rubric:: PEFT methods table
+      :name: supported-peft-methods
 
    ========================= =======
    PEFT method name          Support
