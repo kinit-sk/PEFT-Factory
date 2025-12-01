@@ -18,7 +18,7 @@ Supported PEFT methods
 .. container::
 
    .. rubric:: PEFT methods table
-   :name: supported-peft-methods
+      :name: supported-peft-methods
 
    ========================= =======
    PEFT method name          Support

@@ -1,6 +1,8 @@
 Usage
 =====
 
+This section provides instructions on how to install PEFT-Factory, download necessary data and methods, and run training using both command line and web UI.
+
 .. _quickstart:
 
 Quickstart
