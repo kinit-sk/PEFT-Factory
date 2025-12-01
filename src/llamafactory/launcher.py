@@ -47,6 +47,12 @@ def run_web_demo():
     return _run_web_demo()
 
 
+def run_spaces_demo():
+    from llamafactory.webui.interface import run_spaces_demo as _run_spaces_demo
+
+    return _run_spaces_demo()
+
+
 def run_web_ui():
     from llamafactory.webui.interface import run_web_ui as _run_web_ui
 

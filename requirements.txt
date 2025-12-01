@@ -9,6 +9,7 @@ trl>=0.8.6,<=0.9.6
 gradio>=4.38.0,<=5.45.0
 matplotlib>=3.7.0
 tyro<0.9.0
+spaces
 # ops
 einops
 numpy<2.0.0
