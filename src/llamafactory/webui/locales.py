@@ -590,7 +590,7 @@ LOCALES = {
             "info": "混合精度トレーニングを使用するかどうか。",
         },
     },
-   "compute_pscp": {
+    "compute_pscp": {
         "en": {
             "label": "Compute PSCP",
             "info": "Whether or not to compute the PSPC metric at evaluation.",
