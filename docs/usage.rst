@@ -2,8 +2,6 @@ Usage
 =====
 
 .. _quickstart:
-.. _installation:
-.. _run_training:
 
 Quickstart
 ------------
@@ -23,6 +21,7 @@ For video example please visit the `PEFT-Factory Demonstration Video <https://ww
 
 
 Alternatively, you can run training from command line:
+
 .. code:: bash
 
    # install package
@@ -35,6 +34,7 @@ Create some variables for envsubst
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: bash
+
    # run training with config file
    TIMESTAMP=`date +%s`
    OUTPUT_DIR="saves/bitfit/llama-3.2-1b-instruct/train_wsc_${TIMESTAMP}"
@@ -49,6 +49,7 @@ Create some variables for envsubst
 
 Use the template
 ~~~~~~~~~~~~~~~~
+
 Utility ``envsubst`` replaces the occurances of env variables with their values (see the template).
 
 .. code:: bash
@@ -60,6 +61,8 @@ Run the factory
 .. code:: bash
 
    peftfactory-cli train ${OUTPUT_DIR}/train.yaml
+
+.. _installation:
 
 Installation
 ------------
@@ -96,17 +99,22 @@ Install with pip
 
    pip install dist/[name of the built package].whl
 
+.. _get-data-and-methods:
+
 Get data and methods
 -------------------
+
 To download data, methods and examples for training please download the repository from GitHub.
 
 .. code:: bash
 
    git clone https://github.com/kinit-sk/PEFT-Factory.git && cd PEFT-Factory
 
+.. _run-training:
 
 Run training
 ------------
+
 You can run training from command line or using web UI.
 
 From Command Line
