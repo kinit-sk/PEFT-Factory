@@ -16,22 +16,22 @@ PEFT-Factory is a fork of [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Facto
 
 ## Supported methods
 
-PEFT method name            Support
---------------------------- ---------
-LoRA (including variants)   ✅ 🦙
-OFT                         ✅ 🦙
-Prefix Tuning               ✅ 🤗
-Prompt Tuning               ✅ 🤗
-P-Tuning                    ✅ 🤗
-P-Tuning v2                 ✅ 🤗
-MPT                         ✅ 🤗
-IA3                         ✅ 🤗
-LNTuning                    ✅ 🤗
-Bottleneck Adapter          ✅ 🤖
-Parallal Adapter            ✅ 🤖
-SeqBottleneck Adapter       ✅ 🤖
-SVFT                        ✅ ⚙️
-BitFit                      ✅ ⚙️
+| PEFT method name            | Support |
+|-----------------------------|---------|
+| LoRA (including variants)   | ✅ 🦙  |
+| OFT                         | ✅ 🦙  |
+| Prefix Tuning               | ✅ 🤗  |
+| Prompt Tuning               | ✅ 🤗  |
+| P-Tuning                    | ✅ 🤗  |
+| P-Tuning v2                 | ✅ 🤗  |
+| MPT                         | ✅ 🤗  |
+| IA3                         | ✅ 🤗  |
+| LNTuning                    | ✅ 🤗  |
+| Bottleneck Adapter          | ✅ 🤖  |
+| Parallal Adapter            | ✅ 🤖  |
+| SeqBottleneck Adapter       | ✅ 🤖  |
+| SVFT                        | ✅ ⚙️  |
+| BitFit                      | ✅ ⚙️  |
 
 
 </div>
