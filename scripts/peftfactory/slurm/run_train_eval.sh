@@ -24,7 +24,7 @@
 #SBATCH --account=p1370-25-2
 
 eval "$(conda shell.bash hook)"
-conda activate peft-factory2
+conda activate peftfactory
 module load libsndfile
 
 export HF_HOME="/projects/${PROJECT}/cache"

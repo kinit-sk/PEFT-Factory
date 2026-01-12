@@ -135,8 +135,10 @@ def spearmanr(preds, targets, labels):
 
 
 def record(preds):
-    dataset = load_dataset("rbelanec/record", split="validation")
+    dataset = load_dataset("rbelanec/record", split="train")
     metric = evaluate.load("super_glue", "record")
+
+    print(len(dataset), len(preds))
 
     predictions = [{"idx": dataset[i]["idx"], "prediction_text": p} for i, p in enumerate(preds)]
 

@@ -50,6 +50,7 @@ run_name: ${WANDB_NAME}
 ### eval
 do_eval: false
 per_device_eval_batch_size: 2
+compute_classification_metrics: true
 
 ### predict
 do_predict: true

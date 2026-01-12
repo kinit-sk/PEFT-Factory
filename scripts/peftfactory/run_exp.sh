@@ -49,10 +49,11 @@ do
                 OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
                 WANDB_NAME="${pm}_${m}_eval_${d}_${s}_${TIMESTAMP}"
                 ADAPTER="saves_multiple/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
+                DATASET="${d}_eval"
 
                 mkdir -p ${OUTPUT_DIR}
 
-                export OUTPUT_DIR WANDB_NAME ADAPTER
+                export OUTPUT_DIR WANDB_NAME ADAPTER DATASET
                 envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
                 llamafactory-cli train saves_multiple/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}/train.yaml
