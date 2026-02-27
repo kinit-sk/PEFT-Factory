@@ -38,12 +38,13 @@ module load libsndfile
 
 export HF_HOME="/projects/${PROJECT}/cache"
 
-datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa)
+# datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa)
 # datasets=(mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
+datasets=(apps)
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
 peft_methods=(bitfit)
 models=(llama-3-8b-instruct)
-
+SEED=42
 
 for d in ${datasets[@]};
 do
@@ -54,13 +55,11 @@ do
             saves=(saves_multiple/${pm}/${m}/train_${d}_*)
 
             TIMESTAMP=`date +%s`
-            OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
+            OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${SEED}_${TIMESTAMP}"
             ADAPTER="${saves[-1]}"
             DATASET="${d}_eval"
-            SEED=42
             WANDB_PROJECT="peft-factory-multiple-${pm}"
-            WANDB_NAME="${pm}_${m}_eval_${d}_${s}_${TIMESTAMP}"
-
+            WANDB_NAME="${pm}_${m}_eval_${d}_${SEED}_${TIMESTAMP}"
             mkdir -p ${OUTPUT_DIR}
 
             export OUTPUT_DIR DATASET SEED ADAPTER WANDB_PROJECT WANDB_NAME

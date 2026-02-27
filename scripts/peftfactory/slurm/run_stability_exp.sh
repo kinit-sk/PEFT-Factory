@@ -44,10 +44,11 @@ do
                 OUTPUT_DIR="saves_stability/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
                 WANDB_NAME="${pm}_${m}_eval_${d}_${s}_${TIMESTAMP}"
                 ADAPTER="saves_stability/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
+                DATASET="${d}_eval"
 
                 mkdir -p ${OUTPUT_DIR}
 
-                export OUTPUT_DIR WANDB_NAME ADAPTER
+                export OUTPUT_DIR WANDB_NAME ADAPTER DATASET
                 envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
                 sbatch --job-name ${pm}_${m}_stability_${d}_${s}_${TIMESTAMP} -o logs/${pm}_${m}_stability_${d}_${s}_${TIMESTAMP}.out -e logs/${pm}_${m}_stability_${d}_${s}_${TIMESTAMP}.err scripts/peftfactory/slurm/run_train_eval.sh saves_stability/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}/train.yaml saves_stability/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}/eval.yaml saves_stability/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP} ${d}

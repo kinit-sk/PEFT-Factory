@@ -18,7 +18,7 @@ import pandas as pd
 
 llama_base_flops = 8.38
 
-methods = ["ia3", "prompt-tuning", "prefix-tuning", "p-tuning", "lora", "lntuning"]
+methods = ["ia3", "prompt-tuning", "prefix-tuning", "p-tuning", "lora", "lntuning", "bitfit"]
 methods_parameters_map = {
     "ia3": 196608,
     "prompt-tuning": 409600,
@@ -26,6 +26,7 @@ methods_parameters_map = {
     "p-tuning": 53130752,
     "lora": 14680064,
     "lntuning": 266240,
+    "bitfit": 163840,
 }
 
 methods_flops_map = {
@@ -35,6 +36,7 @@ methods_flops_map = {
     "p-tuning": 10.06 - llama_base_flops,
     "lora": 8.38 - llama_base_flops,
     "lntuning": 8.38 - llama_base_flops,
+    "bitfit": 8.38 - llama_base_flops,
 }
 
 methods_memory_map = {
@@ -44,6 +46,7 @@ methods_memory_map = {
     "p-tuning": 34.53,
     "lora": 27.75,
     "lntuning": 27.43,
+    "bitfit": 27.20,
 }
 
 performance_map = {
@@ -53,6 +56,7 @@ performance_map = {
     "p-tuning": 51.7,
     "lora": 80.1,
     "lntuning": 77.8,
+    "bitfit": 75.3,
 }
 
 
@@ -77,12 +81,13 @@ def print_latex_table(df: pd.DataFrame, beta_p, beta_f, beta_m):
     df = df.copy()
 
     name_map = {
-        "ia3": "IA3",
+        "ia3": "IA$^3$",
         "prompt-tuning": "Prompt Tuning",
         "prefix-tuning": "Prefix Tuning",
         "p-tuning": "P-Tuning",
         "lora": "LoRA",
         "lntuning": "LNTuning",
+        "bitfit": "BitFit",
     }
 
     df["latex_name"] = df["method"].map(name_map)
@@ -141,6 +146,8 @@ def cal_psqps(c_p, c_f, c_m, beta_p, beta_f, beta_m):
         cost_flops = cost(methods_flops_map[method], c_f, beta_f)
         cost_memory = cost(methods_memory_map[method], c_m, beta_m)
 
+        print(cost_params, cost_flops, cost_memory)
+
         psqp_val = np.round(psqp(performance_map[method], cost_params, cost_flops, cost_memory), 2)
 
         rows.append(
@@ -157,9 +164,9 @@ def cal_psqps(c_p, c_f, c_m, beta_p, beta_f, beta_m):
     return pd.DataFrame(rows)
 
 
-beta_p = 1
-beta_f = 1
-beta_m = 1
+beta_p = 2
+beta_f = 2
+beta_m = 2
 
 psqp_df = cal_psqps(c_p, c_f, c_m, beta_p, beta_f, beta_m)
 

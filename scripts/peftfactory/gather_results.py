@@ -202,6 +202,7 @@ for m in models:
                 continue
 
     results_df = pd.DataFrame(results).T
+    print(results_df.to_string())
     print(
         results_df.to_latex(
             float_format="%.1f", caption="Performance across tasks and tuning methods", label="tab:results"
@@ -217,7 +218,7 @@ for m in models:
     print(f"Model {m}")
 
     results = {}
-    for pm in ["ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning"]:
+    for pm in ["ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning", "bitfit"]:
         print(f"Method {pm}")
         results[methods_map[pm]] = {}
         for d in stability_datasets:

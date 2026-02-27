@@ -21,13 +21,15 @@ import wandb
 
 api = wandb.Api()
 
-methods = ["lora", "prefix-tuning", "prompt-tuning", "p-tuning", "lntuning", "ia3"]
+# methods = ["lora", "prefix-tuning", "prompt-tuning", "p-tuning", "lntuning", "ia3", "bitfit"]
+methods = ["bitfit"]
 
 mean_memory_usage = {}
 
 for m in methods:
     print(f"Processing method: {m}")
-    project = f"rbelanec/peft-factory-train-{m}"
+    # project = f"rbelanec/peft-factory-train-{m}"
+    project = f"rbelanec/peft-factory-multiple-{m}"
     runs = api.runs(project)
 
     max_values = []

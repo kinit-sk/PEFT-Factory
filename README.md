@@ -28,7 +28,7 @@ PEFT-Factory is a fork of [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Facto
 | IA3                         | ✅ 🤗  |
 | LNTuning                    | ✅ 🤗  |
 | Bottleneck Adapter          | ✅ 🤖  |
-| Parallal Adapter            | ✅ 🤖  |
+| Parallel Adapter            | ✅ 🤖  |
 | SeqBottleneck Adapter       | ✅ 🤖  |
 | SVFT                        | ✅ ⚙️  |
 | BitFit                      | ✅ ⚙️  |
