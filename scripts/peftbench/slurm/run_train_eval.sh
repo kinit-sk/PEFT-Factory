@@ -21,7 +21,7 @@
 #SBATCH -o logs/peft-factory-stdout.%J.out
 #SBATCH -e logs/peft-factory-stderr.%J.out
 #SBATCH --time=2-00:00
-#SBATCH --account=p1370-25-2
+#SBATCH --account=
 
 eval "$(conda shell.bash hook)"
 conda activate peftfactory
@@ -31,4 +31,4 @@ export HF_HOME="/projects/${PROJECT}/cache"
 
 llamafactory-cli train $1
 llamafactory-cli train $2
-python scripts/peftfactory/compute_metrics.py $3 $4
+python scripts/peftbench/compute_metrics.py $3 $4

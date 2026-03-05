@@ -14,6 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# datasets=(mnli qqp qnli sst2 stsb mrpc rte cola)
+# peft_methods=(ia3 prefix-tuning prompt-tuning lora lntuning)
+# models=(gemma-3-1b-it llama-3-8b-instruct mistral-7b-instruct)
+
 datasets=(codealpacapy boolq piqa record multirc) # GPU1
 # datasets=(mmlu mnli qqp apps) # GPU2
 peft_methods=(prefix-tuning prompt-tuning p-tuning lora lntuning ia3)
@@ -30,30 +34,31 @@ do
             for pm in ${peft_methods[@]};
             do
                 TIMESTAMP=`date +%s`
-                OUTPUT_DIR="saves/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
+                OUTPUT_DIR="saves_multiple/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
                 DATASET="${d}"
                 SEED="${s}"
-                WANDB_PROJECT="peft-factory-${pm}"
+                WANDB_PROJECT="peft-factory-multiple-${pm}"
                 WANDB_NAME="${pm}_${m}_train_${d}_${s}_${TIMESTAMP}"
 
 
                 mkdir -p ${OUTPUT_DIR}
 
                 export OUTPUT_DIR DATASET SEED WANDB_PROJECT WANDB_NAME EPOCHS
-                envsubst < examples/peft/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
+                envsubst < examples/peftbench/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
 
-                OUTPUT_DIR="saves/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
+                OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
                 WANDB_NAME="${pm}_${m}_eval_${d}_${s}_${TIMESTAMP}"
-                ADAPTER="saves/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
+                ADAPTER="saves_multiple/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
+                DATASET="${d}_eval"
 
                 mkdir -p ${OUTPUT_DIR}
 
-                export OUTPUT_DIR WANDB_NAME ADAPTER
-                envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
+                export OUTPUT_DIR WANDB_NAME ADAPTER DATASET
+                envsubst < examples/peftbench/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
-                llamafactory-cli train saves/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}/train.yaml
-                llamafactory-cli train saves/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}/eval.yaml
-                python scripts/peftfactory/compute_metrics.py saves/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP} ${d}
+                llamafactory-cli train saves_multiple/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}/train.yaml
+                llamafactory-cli train saves_multiple/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}/eval.yaml
+                python scripts/peftbench/compute_metrics.py saves_multiple/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP} ${d}
             done
         done
     done

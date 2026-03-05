@@ -14,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-datasets=(cola cb svamp copa)
+datasets=(codealpacapy boolq piqa record multirc) # GPU1
+# datasets=(mmlu mnli qqp apps) # GPU2
 peft_methods=(prefix-tuning prompt-tuning p-tuning lora lntuning ia3)
 models=(llama-3-8b-instruct)
 seeds=(42 123 456 789 101112)
@@ -29,31 +30,30 @@ do
             for pm in ${peft_methods[@]};
             do
                 TIMESTAMP=`date +%s`
-                OUTPUT_DIR="saves_stability/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
+                OUTPUT_DIR="saves/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
                 DATASET="${d}"
                 SEED="${s}"
-                WANDB_PROJECT="peft-factory-stability-${pm}"
+                WANDB_PROJECT="peft-factory-${pm}"
                 WANDB_NAME="${pm}_${m}_train_${d}_${s}_${TIMESTAMP}"
 
 
                 mkdir -p ${OUTPUT_DIR}
 
                 export OUTPUT_DIR DATASET SEED WANDB_PROJECT WANDB_NAME EPOCHS
-                envsubst < examples/peft/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
+                envsubst < examples/peftbench/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
 
-                OUTPUT_DIR="saves_stability/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
+                OUTPUT_DIR="saves/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}"
                 WANDB_NAME="${pm}_${m}_eval_${d}_${s}_${TIMESTAMP}"
-                ADAPTER="saves_stability/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
-                DATASET="${d}_eval"
+                ADAPTER="saves/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}"
 
                 mkdir -p ${OUTPUT_DIR}
 
-                export OUTPUT_DIR WANDB_NAME ADAPTER DATASET
-                envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
+                export OUTPUT_DIR WANDB_NAME ADAPTER
+                envsubst < examples/peftbench/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
-                sbatch --job-name ${pm}_${m}_stability_${d}_${s}_${TIMESTAMP} -o logs/${pm}_${m}_stability_${d}_${s}_${TIMESTAMP}.out -e logs/${pm}_${m}_stability_${d}_${s}_${TIMESTAMP}.err scripts/peftfactory/slurm/run_train_eval.sh saves_stability/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}/train.yaml saves_stability/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}/eval.yaml saves_stability/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP} ${d}
-
-                sleep 1
+                llamafactory-cli train saves/${pm}/${m}/train_${d}_${s}_${TIMESTAMP}/train.yaml
+                llamafactory-cli train saves/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP}/eval.yaml
+                python scripts/peftbench/compute_metrics.py saves/${pm}/${m}/eval_${d}_${s}_${TIMESTAMP} ${d}
             done
         done
     done

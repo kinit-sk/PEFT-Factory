@@ -14,15 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CONFIG_DIR="scripts/peftfactory/stat_utils/configs"
-SCRIPT="scripts/peftfactory/stat_utils/cal_flops.py"
+CONFIG_DIR="scripts/peftbench/stat_utils/configs"
+SCRIPT="scripts/peftbench/stat_utils/cal_flops.py"
 RESULTS=()
 
 for config in "$CONFIG_DIR"/*.yaml; do
     method=$(basename "$config" .yaml)
     echo "Running $SCRIPT with method: $method"
     python "$SCRIPT" "$config"
-    result_file="scripts/peftfactory/stat_utils/flops_${method}.json"
+    result_file="scripts/peftbench/stat_utils/flops_${method}.json"
     if [[ -f "$result_file" ]]; then
         number=$(jq '.number' "$result_file")
         echo "FLOPs for $method: $number"

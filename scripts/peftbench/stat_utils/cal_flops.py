@@ -77,7 +77,7 @@ def calculate_flops(
         print("Params:", params)
 
         save_number_to_json(
-            flops, f"scripts/peftfactory/stat_utils/flops_{path_to_config.split('/')[-1].split('.')[0]}.json"
+            flops, f"scripts/peftbench/stat_utils/flops_{path_to_config.split('/')[-1].split('.')[0]}.json"
         )
 
 

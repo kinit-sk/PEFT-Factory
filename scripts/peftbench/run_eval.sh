@@ -55,11 +55,11 @@ do
 
             export OUTPUT_DIR DATASET SEED ADAPTER WANDB_PROJECT
 
-            envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
+            envsubst < examples/peftbench/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
             llamafactory-cli train ${OUTPUT_DIR}/eval.yaml
 
-            python scripts/peftfactory/compute_metrics.py ${OUTPUT_DIR} ${d}
+            python scripts/peftbench/compute_metrics.py ${OUTPUT_DIR} ${d}
         done
     done
 done

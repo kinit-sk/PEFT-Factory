@@ -22,7 +22,7 @@
 #SBATCH -o logs/peft-factory-eval-stdout.%J.out
 #SBATCH -e logs/peft-factory-eval-stdout.%J.err
 #SBATCH --time=2-00:00
-#SBATCH --account=p1370-25-2
+#SBATCH --account=
 
 eval "$(conda shell.bash hook)"
 conda activate peftfactory
@@ -64,11 +64,11 @@ do
 
             export OUTPUT_DIR DATASET SEED ADAPTER WANDB_PROJECT WANDB_NAME
 
-            envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
+            envsubst < examples/peftbench/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
             llamafactory-cli train ${OUTPUT_DIR}/eval.yaml
 
-            python scripts/peftfactory/compute_metrics.py ${OUTPUT_DIR} ${d}
+            python scripts/peftbench/compute_metrics.py ${OUTPUT_DIR} ${d}
         done
     done
 done
