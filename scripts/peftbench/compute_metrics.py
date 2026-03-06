@@ -138,6 +138,8 @@ def record(preds):
     dataset = load_dataset("rbelanec/record", split="validation")
     metric = evaluate.load("super_glue", "record")
 
+    print(len(dataset), len(preds))
+
     predictions = [{"idx": dataset[i]["idx"], "prediction_text": p} for i, p in enumerate(preds)]
 
     references = [{"idx": d["idx"], "answers": d["answers"]} for d in dataset]

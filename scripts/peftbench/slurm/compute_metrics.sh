@@ -18,17 +18,35 @@
 #SBATCH --gres=gpu:1
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH -o logs/peft-factory-stdout.%J.out
-#SBATCH -e logs/peft-factory-stderr.%J.out
+#SBATCH -o logs/peftfactory-cm-stdout.%J.out
+#SBATCH -e logs/peftfactory-cm-stderr.%J.out
 #SBATCH --time=2-00:00
-#SBATCH --account=p1370-25-2
+#SBATCH --account=
 
 eval "$(conda shell.bash hook)"
-conda activate peft-factory2
+conda activate peftfactory
 module load libsndfile
 
 export HF_HOME="/projects/${PROJECT}/cache"
 
-llamafactory-cli train $1
-llamafactory-cli train $2
-python scripts/peftfactory/compute_metrics.py $3 $4
+# datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa)
+# datasets=(record multirc boolq wic wsc cb copa)
+datasets=(mnli cb)
+peft_methods=(base)
+models=(llama-3-8b-instruct)
+
+
+for d in ${datasets[@]};
+do
+    for m in ${models[@]};
+    do
+        for pm in ${peft_methods[@]};
+        do
+            saves=(saves/${pm}/${m}/eval_${d}_*)
+
+            EVAL_DIR="${saves[-1]}"
+
+            python scripts/peftbench/compute_metrics.py ${EVAL_DIR} ${d}
+        done
+    done
+done

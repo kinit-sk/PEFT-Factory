@@ -33,7 +33,7 @@ Supported PEFT methods
    IA3                       ✅ 🤗
    LNTuning                  ✅ 🤗
    Bottleneck Adapter        ✅ 🤖
-   Parallal Adapter          ✅ 🤖
+   Parallel Adapter          ✅ 🤖
    SeqBottleneck Adapter     ✅ 🤖
    SVFT                      ✅ ⚙️
    BitFit                    ✅ ⚙️

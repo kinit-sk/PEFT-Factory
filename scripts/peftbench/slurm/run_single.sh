@@ -14,12 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# configs=(prompt-tuning_llama-3-8b-instruct_mnli_1744902585 lntuning_gemma-3-1b-it_mnli_1744902583 prompt-tuning_mistral-7b-instruct_mnli_1744902589 lora_llama-3-8b-instruct_mnli_1744902586 lntuning_llama-3-8b-instruct_mnli_1744902587 ia3_mistral-7b-instruct_mnli_1744902588)
-configs=(prompt-tuning_llama-3-8b-instruct_train_stsb_1745333591)
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH -o logs/peft-factory-stdout.%J.out
+#SBATCH -e logs/peft-factory-stderr.%J.out
+#SBATCH --time=2-00:00
+#SBATCH --account=
 
-for c in ${configs[@]};
-do
-     sbatch --job-name ${c} -o logs/${c}.out -e logs/${c}.err scipts/peftfactory/slurm/run_single.sh ${c}.yaml
+eval "$(conda shell.bash hook)"
+conda activate peftfactory
+module load libsndfile
 
-     sleep 1
-done
+export HF_HOME="/projects/${PROJECT}/cache"
+
+llamafactory-cli train $1

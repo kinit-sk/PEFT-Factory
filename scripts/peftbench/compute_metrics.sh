@@ -15,11 +15,12 @@
 # limitations under the License.
 
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa)
+datasets=(copa conala rte mrpc openbookqa wic stsb cola gsm8k siqa math_qa winogrande sst2 hellaswag qnli mnli mmlu qqp apps codealpacapy boolq piqa record multirc)
 # datasets=(record multirc boolq wic wsc cb copa)
 # peft_methods=(ia3 prompt-tuning lora lntuning)
 # datasets=(mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
-datasets=(gsm8k)
-peft_methods=(ia3 prompt-tuning lora lntuning prefix-tuning p-tuning)
+# peft_methods=(ia3 prompt-tuning lora lntuning prefix-tuning p-tuning)
+peft_methods=(bitfit)
 models=(llama-3-8b-instruct)
 
 
@@ -29,11 +30,11 @@ do
     do
         for pm in ${peft_methods[@]};
         do
-            saves=(saves/${pm}/${m}/eval_${d}_*)
+            saves=(saves_multiple/${pm}/${m}/eval_${d}_*)
 
             EVAL_DIR="${saves[-1]}"
 
-            python scripts/peftfactory/compute_metrics.py ${EVAL_DIR} ${d}
+            python scripts/peftbench/compute_metrics.py ${EVAL_DIR} ${d}
         done
     done
 done

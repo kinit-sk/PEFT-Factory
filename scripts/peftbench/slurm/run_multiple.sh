@@ -49,9 +49,9 @@ do
 
             export OUTPUT_DIR DATASET SEED WANDB_PROJECT WANDB_NAME
 
-            envsubst < examples/peft/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
+            envsubst < examples/peftbench/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
 
-            sbatch --job-name ${pm}_${m}_train_${d}_${TIMESTAMP} -o logs/${pm}_${m}_train_${d}_${TIMESTAMP}.out -e logs/${pm}_${m}_train_${d}_${TIMESTAMP}.err scripts/peftfactory/slurm/run_single.sh ${OUTPUT_DIR}/train.yaml
+            sbatch --job-name ${pm}_${m}_train_${d}_${TIMESTAMP} -o logs/${pm}_${m}_train_${d}_${TIMESTAMP}.out -e logs/${pm}_${m}_train_${d}_${TIMESTAMP}.err scripts/peftbench/slurm/run_single.sh ${OUTPUT_DIR}/train.yaml
             
             sleep 1
         done

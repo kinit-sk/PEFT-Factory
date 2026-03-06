@@ -48,7 +48,7 @@ do
 
             export OUTPUT_DIR DATASET SEED WANDB_PROJECT WANDB_NAME
 
-            envsubst < examples/peft/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
+            envsubst < examples/peftbench/${pm}/${m}/train.yaml > ${OUTPUT_DIR}/train.yaml
 
             llamafactory-cli train ${OUTPUT_DIR}/train.yaml
         done

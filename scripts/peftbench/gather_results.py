@@ -22,7 +22,8 @@ import pandas as pd
 
 # models = ["gemma-3-1b-it", "llama-3-8b-instruct", "mistral-7b-instruct"]
 models = ["llama-3-8b-instruct"]
-methods = ["base", "ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning"]
+# methods = ["base", "ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning"]
+methods = ["bitfit"]
 # methods = ["prefix-tuning"]
 # methods = ["base"]
 datasets = [
@@ -67,6 +68,7 @@ methods_map = {
     "prompt-tuning": "Prompt Tuning",
     "prefix-tuning": "Prefix Tuning",
     "p-tuning": "P-Tuning",
+    "bitfit": "BitFit",
 }
 
 datasets_map = {
@@ -188,7 +190,8 @@ for m in models:
         results[pm] = {}
         for d in datasets:
             print(f"Dataset {d}")
-            glob_res = glob.glob(f"saves/{pm}/{m}/eval_{d}*")
+            # glob_res = glob.glob(f"saves/{pm}/{m}/eval_{d}*")
+            glob_res = glob.glob(f"saves_multiple/{pm}/{m}/eval_{d}*")
 
             if not glob_res:
                 continue
@@ -199,6 +202,7 @@ for m in models:
                 continue
 
     results_df = pd.DataFrame(results).T
+    print(results_df.to_string())
     print(
         results_df.to_latex(
             float_format="%.1f", caption="Performance across tasks and tuning methods", label="tab:results"
@@ -214,7 +218,7 @@ for m in models:
     print(f"Model {m}")
 
     results = {}
-    for pm in ["ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning"]:
+    for pm in ["ia3", "lora", "lntuning", "prompt-tuning", "prefix-tuning", "p-tuning", "bitfit"]:
         print(f"Method {pm}")
         results[methods_map[pm]] = {}
         for d in stability_datasets:

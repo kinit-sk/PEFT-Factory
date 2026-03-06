@@ -272,7 +272,6 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
                     }
                 )
 
-
                 for field in fields(PEFT_CONFIG_MAPPING[peft_config_name]):
                     if field.name in peft_common_config_values:
                         continue
@@ -318,7 +317,6 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
                     }
                 )
 
-
                 for field in fields(ADAPTERS_CONFIG_MAPPING[peft_config_name]):
                     if field.name in peft_common_config_values:
                         continue
@@ -361,7 +359,6 @@ def create_train_tab(engine: "Engine") -> dict[str, "Component"]:
                         }
                     }
                 )
-
 
                 for field in fields(CUSTOM_PEFT_CONFIG_MAPPING[peft_config_name]):
                     if field.name in peft_common_config_values:

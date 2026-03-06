@@ -1,8 +1,7 @@
-seed: ${SEED}
+seed: 123
 
 ### model
 model_name_or_path: meta-llama/Meta-Llama-3-8B-Instruct
-adapter_name_or_path: ${ADAPTER}
 trust_remote_code: true
 flash_attn: auto
 use_cache: false
@@ -14,7 +13,6 @@ finetuning_type: bitfit
 task_type: CAUSAL_LM
 
 ### dataset
-eval_dataset: ${DATASET}
 template: llama3
 cutoff_len: 2048
 overwrite_cache: true
@@ -23,19 +21,20 @@ dataloader_num_workers: 2
 packing: false
 
 ### output
-output_dir: ${OUTPUT_DIR}
 logging_steps: 5
 save_steps: 0.05
-plot_loss: true
 overwrite_output_dir: true
 save_only_model: false
+plot_loss: true
 include_num_input_tokens_seen: true
+push_to_hub: true
+push_to_hub_organization: rbelanec
 save_total_limit: 1
 
 ### train
 per_device_train_batch_size: 2
 learning_rate: 5.0e-5
-num_train_epochs: 10.0
+num_train_epochs: 10
 weight_decay: 1.0e-5
 lr_scheduler_type: cosine
 bf16: true
@@ -45,15 +44,14 @@ warmup_ratio: 0.1
 optim: adamw_torch
 report_to:
 - wandb
-run_name: ${WANDB_NAME}
 
 ### eval
 do_eval: false
 per_device_eval_batch_size: 2
 
 ### predict
-do_predict: true
-predict_with_generate: true
+do_predict: false
+predict_with_generate: false
 temperature: null
 top_k: null
 top_p: null

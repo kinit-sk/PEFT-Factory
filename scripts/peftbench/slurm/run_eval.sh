@@ -22,10 +22,10 @@
 #SBATCH -o logs/peft-factory-eval-stdout.%J.out
 #SBATCH -e logs/peft-factory-eval-stdout.%J.err
 #SBATCH --time=2-00:00
-#SBATCH --account=p1370-25-2
+#SBATCH --account=
 
 eval "$(conda shell.bash hook)"
-conda activate peft-factory2
+conda activate peftfactory
 module load libsndfile
 
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola)
@@ -38,12 +38,13 @@ module load libsndfile
 
 export HF_HOME="/projects/${PROJECT}/cache"
 
+# datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa)
 # datasets=(mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
+datasets=(apps)
 # datasets=(mnli qqp qnli sst2 stsb mrpc rte cola record multirc boolq wic wsc cb copa mmlu piqa siqa hellaswag winogrande openbookqa math_qa gsm8k svamp conala codealpacapy apps)
-datasets=(sst2)
 peft_methods=(bitfit)
 models=(llama-3-8b-instruct)
-
+SEED=42
 
 for d in ${datasets[@]};
 do
@@ -54,22 +55,20 @@ do
             saves=(saves_multiple/${pm}/${m}/train_${d}_*)
 
             TIMESTAMP=`date +%s`
-            OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${TIMESTAMP}"
+            OUTPUT_DIR="saves_multiple/${pm}/${m}/eval_${d}_${SEED}_${TIMESTAMP}"
             ADAPTER="${saves[-1]}"
             DATASET="${d}_eval"
-            SEED=123
-            WANDB_PROJECT="peft-factory-eval-${pm}"
-            WANDB_NAME="${pm}_${m}_eval_${d}"
-
+            WANDB_PROJECT="peft-factory-multiple-${pm}"
+            WANDB_NAME="${pm}_${m}_eval_${d}_${SEED}_${TIMESTAMP}"
             mkdir -p ${OUTPUT_DIR}
 
             export OUTPUT_DIR DATASET SEED ADAPTER WANDB_PROJECT WANDB_NAME
 
-            envsubst < examples/peft/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
+            envsubst < examples/peftbench/${pm}/${m}/eval.yaml > ${OUTPUT_DIR}/eval.yaml
 
             llamafactory-cli train ${OUTPUT_DIR}/eval.yaml
 
-            python scripts/peftfactory/compute_metrics.py ${OUTPUT_DIR} ${d}
+            python scripts/peftbench/compute_metrics.py ${OUTPUT_DIR} ${d}
         done
     done
 done

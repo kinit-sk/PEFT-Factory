@@ -322,7 +322,11 @@ class Runner:
                     continue
 
                 if field.name == "target_modules":
-                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                    value = get(f"train.{args['finetuning_type']}_{field.name}")
+                    if value != "":
+                        args[field.name] = ast.literal_eval(value)
+                    else:
+                        args[field.name] = None
                 else:
                     args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
 
@@ -332,7 +336,11 @@ class Runner:
                     continue
 
                 if field.name == "target_modules":
-                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                    value = get(f"train.{args['finetuning_type']}_{field.name}")
+                    if value != "":
+                        args[field.name] = ast.literal_eval(value)
+                    else:
+                        args[field.name] = None
                 else:
                     args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
 
@@ -342,7 +350,11 @@ class Runner:
                     continue
 
                 if field.name == "target_modules":
-                    args[field.name] = ast.literal_eval(get(f"train.{args['finetuning_type']}_{field.name}"))
+                    value = get(f"train.{args['finetuning_type']}_{field.name}")
+                    if value != "":
+                        args[field.name] = ast.literal_eval(value)
+                    else:
+                        args[field.name] = None
                 else:
                     args[field.name] = get(f"train.{args['finetuning_type']}_{field.name}")
 
