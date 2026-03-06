@@ -11,7 +11,7 @@ PEFT-Factory is a fork of [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Facto
 
 For additional details checkout our System Demonstration paper:
 
-[**{PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of Autoregressive Large Language Models**](https://arxiv.org/pdf/2512.02764)
+[**PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of Autoregressive Large Language Models**](https://arxiv.org/pdf/2512.02764)
 
 </div>
 
