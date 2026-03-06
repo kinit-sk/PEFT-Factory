@@ -10,6 +10,10 @@
 PEFT-Factory is a fork of [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Factory) ❤️, upgraded with easy to use **PEFT interface**, support for **HuggingFace PEFT methods** and **datasets** for benchmarking PEFT.
 </div>
 
+For additional details checkout our System Demonstration paper:
+
+[**{PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of Autoregressive Large Language Models**](https://arxiv.org/pdf/2512.02764)
+
 
 ---
 <div align="center" markdown="1">
@@ -154,4 +158,15 @@ To run the web UI use the following command:
 
 ```bash
 pf webui
+```
+
+
+## Citation
+```bibtex
+@article{belanec2025peft,
+  title={PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of Autoregressive Large Language Models},
+  author={Belanec, Robert and Srba, Ivan and Bielikova, Maria},
+  journal={arXiv preprint arXiv:2512.02764},
+  year={2025}
+}
 ```
