@@ -8,11 +8,12 @@
 ### Parameter-Efficient Fine-Tuning made easy
 
 PEFT-Factory is a fork of [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Factory) ❤️, upgraded with easy to use **PEFT interface**, support for **HuggingFace PEFT methods** and **datasets** for benchmarking PEFT.
-</div>
 
 For additional details checkout our System Demonstration paper:
 
 [**{PEFT-Factory: Unified Parameter-Efficient Fine-Tuning of Autoregressive Large Language Models**](https://arxiv.org/pdf/2512.02764)
+
+</div>
 
 
 ---
