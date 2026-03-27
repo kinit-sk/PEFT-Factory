@@ -1,6 +1,7 @@
-![# PEFT Factory](assets/logo.png)
 
 <div align="center" markdown="1">
+
+![# PEFT Factory](assets/logo.png)
 
 ----
 
